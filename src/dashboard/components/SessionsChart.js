@@ -70,7 +70,7 @@ export default function SessionsChart() {
             <Chip size="small" color="success" label="+35%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Sessions per day for the last 30 days
+            Sessions per day for the last 30 day
           </Typography>
         </Stack>
         <LineChart

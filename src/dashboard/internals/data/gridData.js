@@ -75,53 +75,56 @@ export function renderAvatar(params) {
 }
 
 export const columns = [
-  { field: 'pageTitle', headerName: 'Page Title', flex: 1.5, minWidth: 200 },
-  {
-    field: 'status',
-    headerName: 'Status',
-    flex: 0.5,
-    minWidth: 80,
-    renderCell: (params) => renderStatus(params.value),
+  { 
+    field: 'id', 
+    headerName: '글 번호', 
+    flex: 0.3, minWidth: 10 
   },
   {
-    field: 'users',
-    headerName: 'Users',
-    headerAlign: 'right',
-    align: 'right',
+    field: 'type',
+    headerName: '채용 형태',
+    flex: 0.5,
+    minWidth: 80,
+  },
+  {
+    field: 'title',
+    headerName: '제목',
+    headerAlign: 'left',
+    align: 'left',
     flex: 1,
     minWidth: 80,
   },
   {
-    field: 'eventCount',
-    headerName: 'Event Count',
-    headerAlign: 'right',
-    align: 'right',
+    field: 'company',
+    headerName: '회사 이름',
+    headerAlign: 'left',
+    align: 'left',
     flex: 1,
     minWidth: 100,
   },
   {
-    field: 'viewsPerUser',
-    headerName: 'Views per User',
-    headerAlign: 'right',
-    align: 'right',
+    field: 'work_experience',
+    headerName: '경력',
+    headerAlign: 'left',
+    align: 'left',
     flex: 1,
     minWidth: 120,
   },
-  {
-    field: 'averageTime',
-    headerName: 'Average Time',
-    headerAlign: 'right',
-    align: 'right',
-    flex: 1,
-    minWidth: 100,
-  },
-  {
-    field: 'conversions',
-    headerName: 'Daily Conversions',
-    flex: 1,
-    minWidth: 150,
-    renderCell: renderSparklineCell,
-  },
+  // {
+  //   field: 'averageTime',
+  //   headerName: 'Average Time',
+  //   headerAlign: 'right',
+  //   align: 'right',
+  //   flex: 1,
+  //   minWidth: 100,
+  // },
+  // {
+  //   field: 'conversions',
+  //   headerName: 'Daily Conversions',
+  //   flex: 1,
+  //   minWidth: 150,
+  //   renderCell: renderSparklineCell,
+  // },
 ];
 
 export const rows = [
