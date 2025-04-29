@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs, { breadcrumbsClasses } from '@mui/material/Breadcrumbs';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { useLocation, Link } from 'react-router-dom'; // ⭐ useLocation import!
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),
@@ -16,15 +17,49 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 }));
 
 export default function NavbarBreadcrumbs() {
+  const location = useLocation(); // ⭐ 현재 경로 가져오기
+  const pathnames = location.pathname.split('/').filter((x) => x); // ['', 'dashboard', 'list'] -> ['dashboard', 'list']
+
   return (
     <StyledBreadcrumbs
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Typography variant="body1">Dashboard</Typography>
-      <Typography variant="body1" sx={{ color: 'text.primary', fontWeight: 600 }}>
-        Home
-      </Typography>
+      {pathnames.length > 0 ? (
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Typography variant="body1">Home</Typography>
+        </Link>
+      ) : (
+        <Typography variant="body1" sx={{ color: 'text.primary', fontWeight: 600 }}>
+          Home
+        </Typography>
+      )}
+
+      {pathnames.map((value, index) => {
+        const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+
+        const isLast = index === pathnames.length - 1;
+
+        return isLast ? (
+          <Typography
+            key={to}
+            variant="body1"
+            sx={{ color: 'text.primary', fontWeight: 600 }}
+          >
+            {value.charAt(0).toUpperCase() + value.slice(1)}
+          </Typography>
+        ) : (
+          <Link
+            key={to}
+            to={to}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <Typography variant="body1">
+              {value.charAt(0).toUpperCase() + value.slice(1)}
+            </Typography>
+          </Link>
+        );
+      })}
     </StyledBreadcrumbs>
   );
 }
