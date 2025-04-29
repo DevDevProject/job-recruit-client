@@ -52,43 +52,58 @@ const countries = [
   },
 ];
 
-const StyledText = styled('text', {
-  shouldForwardProp: (prop) => prop !== 'variant',
-})(({ theme }) => ({
+// const StyledText = styled('text', {
+//   shouldForwardProp: (prop) => prop !== 'variant',
+// })(({ theme }) => ({
+//   textAnchor: 'middle',
+//   dominantBaseline: 'central',
+//   fill: (theme.vars || theme).palette.text.secondary,
+//   variants: [
+//     {
+//       props: {
+//         variant: 'primary',
+//       },
+//       style: {
+//         fontSize: theme.typography.h5.fontSize,
+//       },
+//     },
+//     {
+//       props: ({ variant }) => variant !== 'primary',
+//       style: {
+//         fontSize: theme.typography.body2.fontSize,
+//       },
+//     },
+//     {
+//       props: {
+//         variant: 'primary',
+//       },
+//       style: {
+//         fontWeight: theme.typography.h5.fontWeight,
+//       },
+//     },
+//     {
+//       props: ({ variant }) => variant !== 'primary',
+//       style: {
+//         fontWeight: theme.typography.body2.fontWeight,
+//       },
+//     },
+//   ],
+// }));
+
+const StyledText = styled('text')(({ theme, variant }) => ({
   textAnchor: 'middle',
   dominantBaseline: 'central',
   fill: (theme.vars || theme).palette.text.secondary,
-  variants: [
-    {
-      props: {
-        variant: 'primary',
-      },
-      style: {
-        fontSize: theme.typography.h5.fontSize,
-      },
-    },
-    {
-      props: ({ variant }) => variant !== 'primary',
-      style: {
-        fontSize: theme.typography.body2.fontSize,
-      },
-    },
-    {
-      props: {
-        variant: 'primary',
-      },
-      style: {
-        fontWeight: theme.typography.h5.fontWeight,
-      },
-    },
-    {
-      props: ({ variant }) => variant !== 'primary',
-      style: {
-        fontWeight: theme.typography.body2.fontWeight,
-      },
-    },
-  ],
+  fontSize:
+    variant === 'primary'
+      ? theme.typography.h5.fontSize
+      : theme.typography.body2.fontSize,
+  fontWeight:
+    variant === 'primary'
+      ? theme.typography.h5.fontWeight
+      : theme.typography.body2.fontWeight,
 }));
+
 
 function PieCenterLabel({ primaryText, secondaryText }) {
   const { width, height, left, top } = useDrawingArea();
@@ -133,15 +148,15 @@ export default function ChartStack() {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/stack/rank`)
     .then((res) => {
-      const withColors = res.data.map((cat, index) => ({
+      const withColors = res.data.stacks.map((cat, index) => ({
         ...cat,
         color: dynamicColors[index % dynamicColors.length],
       }));
 
       setStacks(withColors);
-
-      const totalCount = res.data.reduce((sum, item) => sum + item.count, 0);
-      setTotal(totalCount);
+      console.log(stacks)
+      // const totalCount = res.data.reduce((sum, item) => sum + item.count, 0);
+      setTotal(res.data.count);
     })
       .catch(err => console.error('카테고리 로딩 실패', err));
   }, []);
@@ -171,10 +186,10 @@ export default function ChartStack() {
             }}
             series={[
               {
-                data,
+                data: stacks.map(c => ({ label: c.name, value: c.count })),
                 innerRadius: 75,
                 outerRadius: 100,
-                paddingAngle: 0,
+                paddingAngle: 2,
                 highlightScope: { faded: 'global', highlighted: 'item' },
               },
             ]}
@@ -185,7 +200,7 @@ export default function ChartStack() {
             }}
           >
             <PieCenterLabel
-              primaryText={`${stacks.reduce((sum, s) => sum + s.count, 0)}개`}
+              primaryText={`${total.toLocaleString()}개`}
               secondaryText="총합"
             />
           </PieChart>
@@ -210,7 +225,7 @@ export default function ChartStack() {
                   {stack.name}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {stack.count}%
+                  {((stack.count / total) * 100).toFixed(1)}%
                 </Typography>
               </Stack>
               <LinearProgress

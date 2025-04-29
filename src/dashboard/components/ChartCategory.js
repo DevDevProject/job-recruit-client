@@ -15,13 +15,28 @@ import Stack from '@mui/material/Stack';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { a } from '@react-spring/web';
 
-const StyledText = styled('text', {
-  shouldForwardProp: (prop) => prop !== 'variant',
-})(({ theme }) => ({
+// const StyledText = styled('text', {
+//   shouldForwardProp: (prop) => prop !== 'variant',
+// })(({ theme }) => ({
+//   textAnchor: 'middle',
+//   dominantBaseline: 'central',
+//   fill: (theme.vars || theme).palette.text.secondary,
+// }));
+
+const StyledText = styled('text')(({ theme, variant }) => ({
   textAnchor: 'middle',
   dominantBaseline: 'central',
   fill: (theme.vars || theme).palette.text.secondary,
+  fontSize:
+    variant === 'primary'
+      ? theme.typography.h5.fontSize
+      : theme.typography.body2.fontSize,
+  fontWeight:
+    variant === 'primary'
+      ? theme.typography.h5.fontWeight
+      : theme.typography.body2.fontWeight,
 }));
+
 
 function PieCenterLabel({ primaryText, secondaryText }) {
   const { width, height, left, top } = useDrawingArea();
@@ -30,10 +45,10 @@ function PieCenterLabel({ primaryText, secondaryText }) {
 
   return (
     <>
-      <StyledText x={left + width / 2} y={primaryY}>
+      <StyledText variant="primary" x={left + width / 2} y={primaryY}>
         {primaryText}
       </StyledText>
-      <StyledText x={left + width / 2} y={secondaryY}>
+      <StyledText variant="secondary" x={left + width / 2} y={secondaryY}>
         {secondaryText}
       </StyledText>
     </>
@@ -104,7 +119,7 @@ export default function ChartCategory() {
             slotProps={{ legend: { hidden: true } }}
           >
             <PieCenterLabel
-              primaryText={`${categories.reduce((sum, s) => sum + s.count, 0)}개`}
+              primaryText={`${(categories.reduce((sum, s) => sum + s.count, 0)).toLocaleString()}개`}
               secondaryText="총합"
             />
           </PieChart>
