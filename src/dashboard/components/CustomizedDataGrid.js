@@ -4,24 +4,7 @@ import { columns, rows } from '../internals/data/gridData';
 
 import axios from 'axios'
 
-export default function CustomizedDataGrid() {
-
-    const [rows, setRows] = useState([]);
-    const [loading, setLoading] = useState(true);
-    
-
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/list`)
-            .then((res) => {
-                console.log("success", res)
-                setRows(res.data)
-                setLoading(false)
-            })
-            .catch((err) => {
-                console.log("data loading failed", err);
-                setLoading(false)
-            })
-    }, [])
+export default function CustomizedDataGrid({ rows, loading, rowCount, page, pageSize, setRows, setLoading, setRowCount, setPage, setPageSize }) {
 
     return (
         <DataGrid
@@ -30,47 +13,32 @@ export default function CustomizedDataGrid() {
             getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
             }
-            pagination={false}
             initialState={{
-                pagination: { paginationModel: { pageSize: 20 } },
-            }}
-            pageSizeOptions={[10, 20, 50]}
+                pagination: {
+                  paginationModel: { pageSize: 25, page: 0 },
+                },
+              }}
+            pagination
+            pageSizeOptions={[]}
             onRowClick={(params) => {
                 const url = params.row.url;
                 if (url) {
                   window.open(url, '_blank');
                 }
               }}
-            hideFooter
+            // hideFooter
+            rowCount={rowCount}
+            paginationMode='server'
+            onPaginationModelChange={(params) => {
+                setPage(params.page);
+              }}
+            page={page}
+            disableColumnMenu
             autoHeight
+            loading={loading}
             getRowClassName={() => 'clickable-row'}
             density="compact"
-            slotProps={{
-                filterPanel: {
-                    filterFormProps: {
-                        logicOperatorInputProps: {
-                            variant: 'outlined',
-                            size: 'small',
-                        },
-                        columnInputProps: {
-                            variant: 'outlined',
-                            size: 'small',
-                            sx: { mt: 'auto' },
-                        },
-                        operatorInputProps: {
-                            variant: 'outlined',
-                            size: 'small',
-                            sx: { mt: 'auto' },
-                        },
-                        valueInputProps: {
-                            InputComponentProps: {
-                                variant: 'outlined',
-                                size: 'small',
-                            },
-                        },
-                    },
-                },
-            }}
+            getRowId={(row) => row.id}
         />
     );
 }
