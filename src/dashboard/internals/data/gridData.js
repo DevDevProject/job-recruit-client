@@ -78,17 +78,20 @@ export const columns = [
   { 
     field: 'id', 
     headerName: '글 번호', 
-    flex: 0.3, minWidth: 10 
+    flex: 0.3, minWidth: 10,
+    sortable: false
   },
   {
     field: 'type',
     headerName: '채용 형태',
     flex: 0.5,
     minWidth: 80,
+    sortable: false
   },
   {
     field: 'title',
     headerName: '제목',
+    sortable: false,
     headerAlign: 'left',
     align: 'left',
     flex: 1,
@@ -97,6 +100,7 @@ export const columns = [
   {
     field: 'company',
     headerName: '회사 이름',
+    sortable: false,
     headerAlign: 'left',
     align: 'left',
     flex: 1,
@@ -105,6 +109,7 @@ export const columns = [
   {
     field: 'work_experience',
     headerName: '경력',
+    sortable: false,
     headerAlign: 'left',
     align: 'left',
     flex: 1,
