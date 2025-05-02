@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, path: '/'},
   { text: '채용 공고', icon: <AnalyticsRoundedIcon />, path: '/recruit' },
+  { text: '기술 블로그', icon: <PeopleRoundedIcon />, path: '/blog' },
   { text: '기업 정보', icon: <PeopleRoundedIcon />, path: '/company' },
   // { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
 ];
