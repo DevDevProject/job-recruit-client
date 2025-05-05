@@ -4,6 +4,8 @@ import './App.css';
 import Dashboard from "./page/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Recruit from "./page/Recruit";
+import BlogAdd from "./page/BlogAdd"
+import Blogs from "./page/Blogs";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<Dashboard />}></Route>
         <Route path="/recruit" element={<Recruit />}></Route>
         <Route path="/company" element={<Dashboard />}></Route>
+        <Route path="/blog" element={<Blogs />}></Route>
+        <Route path="/add/tech-blog" element={<BlogAdd />}></Route>
       </Routes>
     </div>
   );

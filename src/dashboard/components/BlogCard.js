@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Grid from '@mui/material/Grid';
+import dayjs from 'dayjs';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -41,7 +42,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-function Author({ author }: { author: { name: string; avatar: string } }) {
+function Author({ author, date }: { author: { name: string; avatar: string }, date: string; }) {
     return (
         <Box
           sx={{
@@ -53,17 +54,22 @@ function Author({ author }: { author: { name: string; avatar: string } }) {
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
-            <Avatar alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
+            <Avatar alt={author.name} src={author.image} sx={{ width: 24, height: 24 }} />
             <Typography variant="caption">{author.name}</Typography>
           </Box>
-          <Typography variant="caption">July 14, 2021</Typography>
+          <Typography variant="caption">{dayjs(date).format('YYYY.MM.DD')}</Typography>
         </Box>
       );
   }
 
-export default function BlogCard({ img, tag, title, description, author, focusedCardIndex, handleFocus, handleBlur }) {
+export default function BlogCard({ img, category, url, title, description, author, date, focusedCardIndex, handleFocus, handleBlur }) {
+  const handleClick = () => {
+    console.log(author)
+    window.open(url, '_blank');
+  };
+
   return (
-    <Grid size={{ xs: 12, md: 6 }}>
+    <Grid size={{ xs: 12, md: 6 }} onClick={handleClick}>
         <SyledCard
           variant="outlined"
           onFocus={() => handleFocus(1)}
@@ -77,13 +83,16 @@ export default function BlogCard({ img, tag, title, description, author, focused
             image={img}
             aspect-ratio="16 / 9"
             sx={{
+              aspectRatio: '16 / 9',
+              width: '100%',
+              objectFit: 'cover',
               borderBottom: '1px solid',
               borderColor: 'divider',
             }}
           />
           <SyledCardContent>
             <Typography gutterBottom variant="caption" component="div">
-              {tag}
+              ( {category} )
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
               {title}
@@ -92,7 +101,7 @@ export default function BlogCard({ img, tag, title, description, author, focused
               {description}
             </StyledTypography>
           </SyledCardContent>
-          <Author author={author} />
+          <Author author={author} date={date} />
         </SyledCard>
       </Grid>
   );
