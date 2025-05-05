@@ -20,6 +20,7 @@ import axios from 'axios';
 import SortButton from './SortButton';
 import ChartCategory from './ChartCategory';
 import ChartStack from './ChartStack';
+import SingleSelectBox from './SingleSelectBox';
 
 export default function RecruitMain() {
 
@@ -33,13 +34,13 @@ export default function RecruitMain() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [totalCount, setTotalCount] = useState(0);
-  const [sort, setSort] = useState('latest');
+  const [sort, setSort] = useState('created_at');
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [rowCount, setRowCount] = useState(0); // 전체 데이터 개수
-  const [page, setPage] = useState(0); // 현재 페이지
-  const [pageSize, setPageSize] = useState(30); // 페이지당 개수
+  const [rowCount, setRowCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState(0);
 
   function clearCondition() {
     setType([]);
@@ -50,14 +51,27 @@ export default function RecruitMain() {
     setLocation([]);
   }
 
+  function searchRecruit() {
+    setSearch(search + 1)
+  }
+
   useEffect(() => {
-    console.log(page)
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/list`, {
+    axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/api/search`,
+      {
+        stacks: stack,
+        categories: category,
+        company_types: type,
+        regions: location,
+        work_experiences: experience
+      },
+      {
         params: {
-            page,
-            size: pageSize,
+          page,
+          sort
         }
-    })
+      }
+    )
         .then((res) => {
             console.log("success", res)
             setRows(res.data.recruits)
@@ -69,7 +83,7 @@ export default function RecruitMain() {
             console.log("data loading failed", err);
             setLoading(false)
         })
-  }, [page, pageSize])
+  }, [page, search])
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -113,7 +127,7 @@ export default function RecruitMain() {
                 onChange={setLocation}
                 options={locations}
               />
-              <MultiSelectBox
+              <SingleSelectBox
                 placeholder='경력'
                 value={experience}
                 onChange={setExperience}
@@ -125,7 +139,7 @@ export default function RecruitMain() {
                 onChange={setStack}
                 options={stacks}
               />
-              <Button variant='outlined' startIcon={<SearchIcon />}>
+              <Button variant='outlined' startIcon={<SearchIcon />} onClick={searchRecruit}>
                 검색하기
               </Button>
             </Stack>
@@ -162,7 +176,7 @@ export default function RecruitMain() {
           </Stack>
         </Stack>
       </Grid>
-      <Grid container spacing={2} columns={12}>
+      <Grid container spacing={2} columns={1}>
         <Grid size={{ xs: 12, lg: 9 }}>
           <CustomizedDataGrid 
             rows={rows}
@@ -172,12 +186,7 @@ export default function RecruitMain() {
             setPage={setPage}
           />
         </Grid>
-        <Grid size={{ xs: 12, lg: 3 }}>
-          <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
-            <ChartCategory />
-            <ChartStack />
-          </Stack>
-        </Grid>
+        
       </Grid>
     </Box>
   );

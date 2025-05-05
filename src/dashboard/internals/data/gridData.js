@@ -94,8 +94,8 @@ export const columns = [
     sortable: false,
     headerAlign: 'left',
     align: 'left',
-    flex: 1,
-    minWidth: 80,
+    flex: 1.5,
+    minWidth: 200,
   },
   {
     field: 'company',
@@ -104,7 +104,7 @@ export const columns = [
     headerAlign: 'left',
     align: 'left',
     flex: 1,
-    minWidth: 100,
+    minWidth: 50,
   },
   {
     field: 'work_experience',
@@ -112,7 +112,16 @@ export const columns = [
     sortable: false,
     headerAlign: 'left',
     align: 'left',
-    flex: 1,
+    flex: 0.5,
+    minWidth: 120,
+  },
+  {
+    field: 'deadline',
+    headerName: '마감일',
+    sortable: false,
+    headerAlign: 'left',
+    align: 'left',
+    flex: 0.5,
     minWidth: 120,
   },
   // {
