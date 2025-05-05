@@ -12,13 +12,14 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import BusinessIcon from '@mui/icons-material/Business';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, path: '/'},
   { text: '채용 공고', icon: <AnalyticsRoundedIcon />, path: '/recruit' },
   { text: '기술 블로그', icon: <PeopleRoundedIcon />, path: '/blog' },
-  { text: '기업 정보', icon: <PeopleRoundedIcon />, path: '/company' },
+  { text: '기업 정보', icon: <BusinessIcon />, path: '/company' },
   // { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
 ];
 
