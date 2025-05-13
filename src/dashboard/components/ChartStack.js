@@ -25,71 +25,6 @@ const data = [
   { label: 'Other', value: 5000 },
 ];
 
-const countries = [
-  {
-    name: 'India',
-    value: 50,
-    flag: <IndiaFlag />,
-    color: 'hsl(220, 25%, 65%)',
-  },
-  {
-    name: 'USA',
-    value: 35,
-    flag: <UsaFlag />,
-    color: 'hsl(220, 25%, 45%)',
-  },
-  {
-    name: 'Brazil',
-    value: 10,
-    flag: <BrazilFlag />,
-    color: 'hsl(220, 25%, 30%)',
-  },
-  {
-    name: 'Other',
-    value: 5,
-    flag: <GlobeFlag />,
-    color: 'hsl(220, 25%, 20%)',
-  },
-];
-
-// const StyledText = styled('text', {
-//   shouldForwardProp: (prop) => prop !== 'variant',
-// })(({ theme }) => ({
-//   textAnchor: 'middle',
-//   dominantBaseline: 'central',
-//   fill: (theme.vars || theme).palette.text.secondary,
-//   variants: [
-//     {
-//       props: {
-//         variant: 'primary',
-//       },
-//       style: {
-//         fontSize: theme.typography.h5.fontSize,
-//       },
-//     },
-//     {
-//       props: ({ variant }) => variant !== 'primary',
-//       style: {
-//         fontSize: theme.typography.body2.fontSize,
-//       },
-//     },
-//     {
-//       props: {
-//         variant: 'primary',
-//       },
-//       style: {
-//         fontWeight: theme.typography.h5.fontWeight,
-//       },
-//     },
-//     {
-//       props: ({ variant }) => variant !== 'primary',
-//       style: {
-//         fontWeight: theme.typography.body2.fontWeight,
-//       },
-//     },
-//   ],
-// }));
-
 const StyledText = styled('text')(({ theme, variant }) => ({
   textAnchor: 'middle',
   dominantBaseline: 'central',
@@ -154,8 +89,7 @@ export default function ChartStack() {
       }));
 
       setStacks(withColors);
-      console.log(stacks)
-      // const totalCount = res.data.reduce((sum, item) => sum + item.count, 0);
+      
       setTotal(res.data.count);
     })
       .catch(err => console.error('카테고리 로딩 실패', err));
@@ -166,6 +100,13 @@ export default function ChartStack() {
     color: dynamicColors[index],
   }));
 
+  function formatNumberShort(value) {
+    if (value >= 1_000_000_000) return (value / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
+    if (value >= 1_000_000) return (value / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (value >= 1_000) return (value / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+    return value.toString();
+  }  
+
   return (
     <Card
       variant="outlined"
@@ -173,9 +114,9 @@ export default function ChartStack() {
     >
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-          Stack 통계
+          기술 스택 통계
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <PieChart
             colors={dynamicColors}
             margin={{
@@ -211,7 +152,6 @@ export default function ChartStack() {
             direction="row"
             sx={{ alignItems: 'center', gap: 2, pb: 2 }}
           >
-            {stack.flag}
             <Stack sx={{ gap: 1, flexGrow: 1 }}>
               <Stack
                 direction="row"

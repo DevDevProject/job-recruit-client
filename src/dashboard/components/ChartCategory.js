@@ -48,7 +48,7 @@ function PieCenterLabel({ primaryText, secondaryText }) {
       <StyledText variant="primary" x={left + width / 2} y={primaryY}>
         {primaryText}
       </StyledText>
-      <StyledText variant="secondary" x={left + width / 2} y={secondaryY}>
+      <StyledText x={left + width / 2} y={secondaryY}>
         {secondaryText}
       </StyledText>
     </>
@@ -92,13 +92,21 @@ export default function ChartCategory() {
     color: dynamicColors[index],
   }));
 
+  function formatNumberShort(value) {
+    if (value >= 1_000_000_000) return (value / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
+    if (value >= 1_000_000) return (value / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (value >= 1_000) return (value / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+    return value.toString();
+  }
+  
+
   return (
     <Card
       variant="outlined"
       sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
     >
       <CardContent>
-        <Typography component="h2" variant="subtitle2" sx={{ mb: 2 }}>
+        <Typography component="h2" variant="subtitle2">
           카테고리 통계
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
