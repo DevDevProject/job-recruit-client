@@ -17,6 +17,7 @@ import {
 } from '../dashboard/theme/customizations';
 import Search from '../dashboard/components/Search';
 import RecruitMain from '../dashboard/components/RecruitMain';
+import { Helmet } from 'react-helmet';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -27,6 +28,10 @@ const xThemeComponents = {
 
 export default function Recruit(props) {
   return (
+    <>
+    <Helmet>
+      <title>개발자 채용 공고 - AllDevHub</title>
+    </Helmet>
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
@@ -58,5 +63,6 @@ export default function Recruit(props) {
         </Box>
       </Box>
     </AppTheme>
+    </>
   );
 }

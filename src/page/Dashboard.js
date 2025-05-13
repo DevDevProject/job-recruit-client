@@ -16,6 +16,7 @@ import {
   treeViewCustomizations,
 } from '../dashboard/theme/customizations';
 import Search from '../dashboard/components/Search';
+import { Helmet } from 'react-helmet';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -26,6 +27,10 @@ const xThemeComponents = {
 
 export default function Dashboard(props) {
   return (
+    <>
+    <Helmet>
+      <title>개발자 플랫폼의 모든 것 - AllDevHub</title>
+    </Helmet>
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
@@ -57,5 +62,6 @@ export default function Dashboard(props) {
         </Box>
       </Box>
     </AppTheme>
+    </>
   );
 }
