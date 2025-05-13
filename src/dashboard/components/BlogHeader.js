@@ -5,13 +5,9 @@ import Search from './Search'; // 기존에 쓰던 컴포넌트
 import Header from './Header';
 import { useState } from 'react';
 
-export default function BlogHeader() {
-  const [selectedCategory, setSelectedCategory] = useState('All categories');
-  const categories = ['All categories', 'Frontend', 'Backend', 'AI', 'Engineering'];
-
-  function handleClick(e) {
-    console.log("clicked")
-  }
+export default function BlogHeader({ selectedCategory, setSelectedCategory, searchQuery, setSearchQuery }) {
+  
+  const categories = ['All', 'Frontend', 'Backend', 'AI', 'Engineering', 'Database'];
 
   return (
     <div>
@@ -82,10 +78,10 @@ export default function BlogHeader() {
             overflow: 'auto',
           }}
         >
-          <Search />
-          <IconButton size="small" aria-label="RSS feed">
-            <RssFeedRoundedIcon />
-          </IconButton>
+          <Search 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </Box>
       </Box>
     </div>

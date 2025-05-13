@@ -32,6 +32,8 @@ import {
 } from '../dashboard/theme/customizations';
 import BlogHeader from '../dashboard/components/BlogHeader';
 import BlogGrid from '../dashboard/components/BlogGrid';
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -199,20 +201,50 @@ export function Search() {
 
 export default function Blogs(props) {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
+  const [selectedCategory, setSelectedCategory] = React.useState('All');
+  const [searchQuery, setSearchQuery] = React.useState('');
 
-  const handleFocus = (index) => {
-    setFocusedCardIndex(index);
+  const [cardData, setCardData] = React.useState([])
+  const [page, setPage] = React.useState(1)
+  const [limit, setLimit] = React.useState(10)
+  const [total, setTotal] = React.useState(0)
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
-  const handleBlur = () => {
-    setFocusedCardIndex(null);
-  };
+  const getPageCount = () => {
+    if(total % limit == 0)
+        return total / limit
+    return total / limit + 1
+  }
 
-  const handleClick = () => {
-    console.info('You clicked the filter chip.');
-  };
+  React.useEffect(() => {
+    const params = {
+      page: page,
+      limit: limit,
+      category: selectedCategory,
+    }
+
+    if (searchQuery)
+      params.search = searchQuery
+
+    axios.get(`${process.env.REACT_APP_BLOG_SERVER_URL}/api/blogs`, { params })
+      .then((res) => {
+        console.log(res.data)
+        setCardData(res.data.blogs)
+        setTotal(res.data.total)
+      })
+      .catch((err) => {
+        console.log("data loading failed", err);
+      })
+  }, [page, searchQuery, selectedCategory])
 
   return (
+    <>
+    <Helmet>
+      <title>기술 블로그 - AllDevHub</title>
+    </Helmet>
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
@@ -238,12 +270,24 @@ export default function Blogs(props) {
             }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <BlogHeader />
-              <BlogGrid />
+              <BlogHeader 
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+              <BlogGrid 
+                cardData={cardData}
+                total={total}
+                limit={limit}
+                page={page}
+                handlePageChange={handlePageChange}
+              />
             </Box>
           </Stack>
         </Box>
       </Box>
     </AppTheme>
+    </>
   );
 }

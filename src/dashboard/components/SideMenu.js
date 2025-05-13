@@ -10,6 +10,7 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
+import { Button } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -38,50 +39,84 @@ export default function SideMenu() {
       <Box
         sx={{
           display: 'flex',
+          alignItems: 'center',
           mt: 'calc(var(--template-frame-height, 0px) + 4px)',
           p: 1.5,
+          height: 100,
+          cursor: 'pointer'
         }}
+        onClick={() => window.location.href='/'}
+        
       >
-        <SelectContent />
+        <Box
+          sx={{
+            height: '100%',
+            aspectRatio: '1', // 동그란 정사각형 로고
+            mr: 0,
+          }}
+        >
+          <img
+            src="/alldev.png"
+            alt="My Logo"
+            style={{
+              height: '100%',
+              width: '100%',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        </Box>
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 600,
+            color: 'rgb(93, 182, 245)', // 로고색과 맞추기
+            fontSize: '1.75rem',       // 필요시 조정
+          }}
+        >
+          AllDevHub
+        </Typography>
       </Box>
+      {/* <SelectContent /> */}
       <Divider />
+
       <Box
         sx={{
           overflow: 'auto',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          
         }}
       >
         <MenuContent />
         {/* <CardAlert /> */}
       </Box>
+      <Divider />
       <Stack
-        direction="row"
-        sx={{
-          p: 2,
-          gap: 1,
-          alignItems: 'center',
-          borderTop: '1px solid',
-          borderColor: 'divider',
-        }}
+        direction='row'
+        spacing={2}
+        justifyContent={'center'}
+        mb={1}
+        mt={1}
       >
-        <Avatar
-          sizes="small"
-          alt="Riley Carter"
-          src="/static/images/avatar/7.jpg"
-          sx={{ width: 36, height: 36 }}
-        />
-        <Box sx={{ mr: 'auto' }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-            Riley Carter
-          </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            riley@email.com
-          </Typography>
-        </Box>
-        <OptionsMenu />
+      <Button
+          color="primary"
+          sx={{ textTransform: 'none', marginBottom: '3px' }}
+          onClick={() => console.log('로그인')}
+        >
+          로그인
+      </Button>
+      <Button
+          color="primary"
+          sx={{ textTransform: 'none', marginBottom: '3px' }}
+          onClick={() => console.log('로그인')}
+        >
+          회원가입
+      </Button>
       </Stack>
+      
     </Drawer>
   );
 }

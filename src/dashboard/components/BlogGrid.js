@@ -35,40 +35,10 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-export default function BlogGrid() {
+export default function BlogGrid( {cardData, total, limit, page, handlePageChange}) {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
 
-  const [cardData, setCardData] = React.useState([])
-  const [page, setPage] = React.useState(1)
-  const [limit, setLimit] = React.useState(10)
-  const [total, setTotal] = React.useState(0)
-
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
-  const getPageCount = () => {
-    if(total % limit == 0)
-        return total / limit
-    return total / limit + 1
-  }
-
-  React.useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BLOG_SERVER_URL}/blogs`, {
-      params: {
-        page: page,
-        limit: limit
-      }
-    })
-      .then((res) => {
-        console.log("success", res)
-        setCardData(res.data.blogs)
-        setTotal(res.data.total)
-      })
-      .catch((err) => {
-        console.log("data loading failed", err);
-      })
-  }, [page])
+  
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
