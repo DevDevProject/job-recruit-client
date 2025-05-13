@@ -5,14 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
+import {
+  createTheme,
+  ThemeProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles';
+
+import { CssVarsProvider as JoyCssVarsProvider } from '@mui/joy/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const materialTheme = createTheme();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  
     <BrowserRouter>
-    <App />
-    </BrowserRouter>
-    
-  </React.StrictMode>
+      <App />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
