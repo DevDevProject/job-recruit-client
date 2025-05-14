@@ -3,7 +3,7 @@ name: React tp GitHub Pages
 on:
   push:
     branches:
-      - [main]
+      - main
 
 jobs:
   build-and-deploy:
