@@ -2,6 +2,7 @@
   "name": "job-recruit-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kkjh9909.github.io/job-recruit-client",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -25,6 +26,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
+    "react-horizontal-scrolling-menu": "^8.2.0",
     "react-router-dom": "^7.5.0",
     "react-scripts": "5.0.1",
     "start": "^5.1.0",
