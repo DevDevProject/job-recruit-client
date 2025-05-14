@@ -11,6 +11,7 @@ import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import SideMenuMobile from './SideMenuMobile';
 import MenuButton from './MenuButton';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
+import { useLocation } from 'react-router-dom';
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
@@ -30,6 +31,16 @@ const Toolbar = styled(MuiToolbar)({
 
 export default function AppNavbar() {
   const [open, setOpen] = React.useState(false);
+  const location = useLocation(); // 현재 경로 정보
+  const path = location.pathname; // 예: "/recruit/1"
+  const segment = path.split('/')[1]; // "recruit"
+
+  const nameMap = {
+    recruit: '채용공고',
+    company: '회사 정보',
+    blog: '기술 블로그',
+    about: '회사 소개',
+  }
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -65,7 +76,7 @@ export default function AppNavbar() {
           >
             <CustomIcon />
             <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
+              {nameMap[segment]}
             </Typography>
           </Stack>
           <ColorModeIconDropdown />
@@ -91,15 +102,13 @@ export function CustomIcon() {
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        backgroundImage:
-          'linear-gradient(135deg, hsl(210, 98%, 60%) 0%, hsl(210, 100%, 35%) 100%)',
         color: 'hsla(210, 100%, 95%, 0.9)',
         border: '1px solid',
         borderColor: 'hsl(210, 100%, 55%)',
         boxShadow: 'inset 0 2px 5px rgba(255, 255, 255, 0.3)',
       }}
     >
-      <DashboardRoundedIcon color="inherit" sx={{ fontSize: '1rem' }} />
+      <img src='favicon.ico'></img>
     </Box>
   );
 }
