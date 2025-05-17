@@ -19,7 +19,7 @@ const materialTheme = createTheme();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
-  <BrowserRouter basename="/job-recruit-client">
+  <BrowserRouter>
       <App />
   </BrowserRouter>
 );
