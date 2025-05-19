@@ -9,15 +9,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      REACT_APP_API_URL: ${{ secrets.REACT_APP_SERVER_URL }}
-
     steps:
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+
+      - name: Create .env file
+        run: echo "${{ secrets.REACT_ENV_FILE }}" > .env
 
       - run: npm install
 
@@ -28,4 +28,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          cname: alldevhub.com
 
