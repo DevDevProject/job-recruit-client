@@ -57,7 +57,7 @@ export default function RecruitMain() {
 
   useEffect(() => {
     axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/search`,
+      `${process.env.REACT_APP_SERVER_URL}/api/recruit/search`,
       {
         stacks: stack,
         categories: category,

@@ -78,7 +78,7 @@ export default function Company(props) {
       page_size: 2000
     }
 
-    axios.get(`${process.env.REACT_APP_COMPANY_SERVER_URL}/api/companies`, {
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/companies`, {
       params
     })
       .then(res => {
@@ -105,7 +105,7 @@ export default function Company(props) {
       params.search = searchQuery;
     }
 
-    axios.get(`${process.env.REACT_APP_COMPANY_SERVER_URL}/api/companies`, { params })
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/companies`, { params })
       .then((res) => {
         const trans = res.data.companies.map((company) =>
           createData(

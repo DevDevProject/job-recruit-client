@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function BlogHeader({ selectedCategory, setSelectedCategory, searchQuery, setSearchQuery }) {
   
-  const categories = ['All', 'Frontend', 'Backend', 'AI', 'Engineering', 'Database'];
+  const categories = ['All', 'Frontend', 'Backend', 'AI', 'Engineering', 'Database', 'Cloud', 'Architecture', '기타'];
 
   return (
     <div>
@@ -43,32 +43,33 @@ export default function BlogHeader({ selectedCategory, setSelectedCategory, sear
           overflow: 'auto',
         }}
       >
-        <Box
-          sx={{
-            display: 'inline-flex',
-            flexDirection: 'row',
-            gap: 3,
-            overflow: 'auto',
-          }}
-        >
-          {categories.map((category) => (
-            <Chip
-              key={category}
-              label={category}
-              onClick={() => setSelectedCategory(category)}
-              size="medium"
-              sx={
-                selectedCategory === category
-                  ? {}
-                  : {
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                  }
-              }
-            />
-          ))}
+          <Box
+            sx={{
+              // display: 'inline-flex',
+              flexDirection: 'row',
+              gap: 3,
+              overflow: 'auto',
+            }}
+          >
+            {categories.map((category) => (
+              <Chip
+                key={category}
+                label={category}
+                onClick={() => setSelectedCategory(category)}
+                size="medium"
+                sx={
+                  selectedCategory === category
+                    ? {}
+                    : {
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                    }
+                }
+              />
+            ))}
 
-        </Box>
+          </Box>
+
         <Box
           sx={{
             display: { xs: 'none', sm: 'flex' },

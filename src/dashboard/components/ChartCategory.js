@@ -71,7 +71,7 @@ export default function ChartCategory() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/category/rank`)
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/category/rank`)
     .then((res) => {
       const withColors = res.data.map((cat, index) => ({
         ...cat,

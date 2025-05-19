@@ -81,7 +81,7 @@ export default function ChartStack() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/stack/rank`)
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/stack/rank`)
     .then((res) => {
       const withColors = res.data.stacks.map((cat, index) => ({
         ...cat,

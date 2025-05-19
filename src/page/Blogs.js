@@ -229,7 +229,7 @@ export default function Blogs(props) {
     if (searchQuery)
       params.search = searchQuery
 
-    axios.get(`${process.env.REACT_APP_BLOG_SERVER_URL}/api/blogs`, { params })
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/blogs`, { params })
       .then((res) => {
         console.log(res.data)
         setCardData(res.data.blogs)

@@ -27,7 +27,7 @@ const BlogAdd = () => {
     };
 
     try {
-      const res = await axios.post('http://localhost:8001/blog', data, {
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/blog/add`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
