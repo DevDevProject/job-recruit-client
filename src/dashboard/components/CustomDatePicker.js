@@ -54,7 +54,7 @@ ButtonField.propTypes = {
 };
 
 export default function CustomDatePicker() {
-  const [value, setValue] = React.useState(dayjs('2023-04-17'));
+  const [value, setValue] = React.useState(dayjs());
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -69,7 +69,7 @@ export default function CustomDatePicker() {
           nextIconButton: { size: 'small' },
           previousIconButton: { size: 'small' },
         }}
-        open={open}
+        open={false}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         views={['day', 'month', 'year']}
