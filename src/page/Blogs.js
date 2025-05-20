@@ -231,7 +231,6 @@ export default function Blogs(props) {
 
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/blogs`, { params })
       .then((res) => {
-        console.log(res.data)
         setCardData(res.data.blogs)
         setTotal(res.data.total)
       })
@@ -276,6 +275,16 @@ export default function Blogs(props) {
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
               />
+              
+              <Typography component="h2" variant="h6" sx={{textAlign: 'left'}}>
+                총 {" "}
+                <Box component="span" sx={{ color: 'success.main', fontWeight: 600 }}>
+                  {total.toLocaleString()}
+                </Box>
+                개
+              </Typography>
+              
+              
               <BlogGrid 
                 cardData={cardData}
                 total={total}
