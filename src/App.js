@@ -9,7 +9,7 @@ import Blogs from "./page/Blogs";
 import Company from "./page/Company";
 import CompanyTable from "./dashboard/components/CompanyTable";
 import RecruitDetail from "./page/RecruitDetail";
-import SignIn from "./page/SignIn";
+// import SignIn from "./page/SignIn";
 import CompanyDetail from "./page/CompanyDetail";
 
 function App() {
