@@ -33,7 +33,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
         }}
       >
         <Stack direction="row" sx={{ p: 2, pb: 0, gap: 1 }}>
-          <Stack
+          {/* <Stack
             direction="row"
             sx={{ gap: 1, alignItems: 'center', flexGrow: 1, p: 1 }}
           >
@@ -46,22 +46,22 @@ function SideMenuMobile({ open, toggleDrawer }) {
             <Typography component="p" variant="h6">
               Riley Carter
             </Typography>
-          </Stack>
-          <MenuButton showBadge>
+          </Stack> */}
+          {/* <MenuButton showBadge>
             <NotificationsRoundedIcon />
-          </MenuButton>
+          </MenuButton> */}
         </Stack>
-        <Divider />
+        {/* <Divider /> */}
         <Stack sx={{ flexGrow: 1 }}>
           <MenuContent />
           <Divider />
         </Stack>
-        <CardAlert />
-        <Stack sx={{ p: 2 }}>
+        {/* <CardAlert /> */}
+        {/* <Stack sx={{ p: 2 }}>
           <Button variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Drawer>
   );

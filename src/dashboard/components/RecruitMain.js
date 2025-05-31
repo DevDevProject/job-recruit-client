@@ -21,6 +21,7 @@ import SortButton from './SortButton';
 import ChartCategory from './ChartCategory';
 import ChartStack from './ChartStack';
 import SingleSelectBox from './SingleSelectBox';
+import SelectPopup from './SelectPopup';
 
 export default function RecruitMain() {
 
@@ -42,6 +43,15 @@ export default function RecruitMain() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState(0);
 
+  const [filterState, setFilterState] = React.useState({
+    type: [],
+    category: [],
+    experience: [],
+    stack: [],
+    location: [],
+    companyType: [],
+  });
+
   function clearCondition() {
     setType([]);
     setCategory([]);
@@ -56,6 +66,7 @@ export default function RecruitMain() {
   }
 
   useEffect(() => {
+
     axios.post(
       `${process.env.REACT_APP_SERVER_URL}/api/recruit/search`,
       {
@@ -73,14 +84,12 @@ export default function RecruitMain() {
       }
     )
         .then((res) => {
-            console.log("success", res)
             setRows(res.data.recruits)
             setRowCount(res.data.total_count)
             setTotalCount(res.data.total_count)
             setLoading(false)
         })
         .catch((err) => {
-            console.log("data loading failed", err);
             setLoading(false)
         })
   }, [page, search])
@@ -146,7 +155,23 @@ export default function RecruitMain() {
           </>
         ) : (
           <>
-            <Button>모바일</Button>
+            {/* <Button variant="contained" onClick={() => setOpen(true)}>모바일</Button> */}
+
+            <SelectPopup
+              type={type} setType={setType}
+              category={category} setCategory={setCategory}
+              experience={experience} setExperience={setExperience}
+              stack={stack} setStack={setStack}
+              location={location} setLocation={setLocation}
+              companyType={companyType} setCompanyType={setCompanyType}
+              categories={categories}
+              types={types}
+              experiences={experiences}
+              stacks={stacks}
+              locations={locations}
+              industries={industries}
+              searchRecruit={searchRecruit}
+            />
           </>
         )}
 

@@ -10,8 +10,9 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
-import { Button } from '@mui/material';
-
+import Button from '@mui/material/Button';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import LoginIcon from '@mui/icons-material/Login';
 const drawerWidth = 240;
 
 const Drawer = styled(MuiDrawer)({
@@ -56,7 +57,7 @@ export default function SideMenu() {
           }}
         >
           <img
-            src="/alldev.png"
+            src={process.env.PUBLIC_URL + '/alldev.png'}
             alt="My Logo"
             style={{
               height: '100%',
@@ -94,7 +95,7 @@ export default function SideMenu() {
         {/* <CardAlert /> */}
       </Box>
       <Divider />
-      <Stack
+      {/* <Stack
         direction='row'
         spacing={2}
         justifyContent={'center'}
@@ -115,6 +116,17 @@ export default function SideMenu() {
         >
           회원가입
       </Button>
+      </Stack> */}
+      <Stack 
+        sx={{ p: 2 }}
+        
+      >
+        {/* <Button variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
+          Logout
+        </Button> */}
+        <Button variant="outlined" fullWidth startIcon={<LoginIcon />}>
+          Login / Sign up
+        </Button>
       </Stack>
       
     </Drawer>

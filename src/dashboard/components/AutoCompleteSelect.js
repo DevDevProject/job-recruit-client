@@ -12,7 +12,9 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const stackOptions = ['JavaScript', 'React', 'Spring', 'Python', 'Docker', 'Kubernetes'];
+function CustomPopper(props) {
+  return <Popper {...props} style={{ zIndex: 2100, marginTop: 4, width: 300 }} />;
+}
 
 export default function AutoCompleteSelect({ placeholder, value, onChange, options }) {
     const [open, setOpen] = useState(false);
@@ -33,7 +35,7 @@ export default function AutoCompleteSelect({ placeholder, value, onChange, optio
         </Button>
   
         {/* 드롭다운 팝업 */}
-        <Popper open={open} anchorEl={anchorRef.current} placement="bottom-start">
+        <Popper open={open} anchorEl={anchorRef.current} placement="bottom-start" style={{ zIndex: 2000 }}>
           <ClickAwayListener onClickAway={handleClickAway}>
             <Paper elevation={3} sx={{ p: 2, width: 300, mt: 1 }}>
               {/* 검색 가능한 멀티 선택 */}
@@ -43,8 +45,8 @@ export default function AutoCompleteSelect({ placeholder, value, onChange, optio
                 value={value}
                 onChange={(e, newValue) => {
                     onChange(newValue)
-                    console.log("선택된 값:", newValue);
                 }}
+                PopperComponent={CustomPopper}
                 filterSelectedOptions
                 renderInput={(params) => (
                   <TextField {...params} label="기술 스택 검색" placeholder="입력 후 선택" />

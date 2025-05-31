@@ -108,7 +108,7 @@ export function CustomIcon() {
         boxShadow: 'inset 0 2px 5px rgba(255, 255, 255, 0.3)',
       }}
     >
-      <img src='favicon.ico'></img>
+      <img src={process.env.PUBLIC_URL + "/favicon.ico"} alt='favicon'></img>
     </Box>
   );
 }
