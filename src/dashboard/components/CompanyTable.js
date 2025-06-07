@@ -16,38 +16,40 @@ import CompanyRow from './CompanyRow';
 import Search from './Search';
 import Stack from '@mui/material/Stack';
 import SearchAutoComplete from './SearchAutoComplete';
+import CompanyCard from '../../company/components/CompanyCard';
+import { Grid } from '@mui/material';
 
-export default function CompanyTable({data, page, handlePageChange, total}) {
+export default function CompanyTable({ data = [], page, handlePageChange, total }) {
+
   return (
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>회사 이름</TableCell>
-              <TableCell align="right">지역</TableCell>
-              <TableCell align="right">회사 규모</TableCell>
-              <TableCell align="right">산업</TableCell>
-              <TableCell align="right">설립일</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <CompanyRow key={row.name} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pt: 4, width: '100%' }}>
-          <Pagination
-            variant='outlined'
-            count={Math.ceil(total / 20)}
-            page={page}
-            onChange={handlePageChange}
-            boundaryCount={3}
-            showFirstButton
-            showLastButton
-          />
-        </Box>
-      </TableContainer>
+    <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 4 }, py: 3 }}>
+      <Grid container spacing={2}>
+        {data.map((row, index) => (
+          <Grid
+            item
+            key={index}
+            size={{
+              xs:12,
+              md:6
+            }}
+          >
+            <CompanyCard row={row} />
+          </Grid>
+        ))}
+      </Grid>
+
+
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pt: 4, width: '100%' }}>
+        <Pagination
+          variant='outlined'
+          count={Math.ceil(total / 20)}
+          page={page}
+          onChange={handlePageChange}
+          boundaryCount={3}
+          showFirstButton
+          showLastButton
+        />
+      </Box>
+    </Box>
   );
 }

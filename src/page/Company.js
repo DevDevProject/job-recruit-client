@@ -33,21 +33,18 @@ const xThemeComponents = {
 };
 
 function createData(
-  name: string,
-  region: string,
-  industry: string,
-  size: number,
-  establishment: string,
+  id,
+  name,
+  region,
+  industry,
+  size,
+  establishment,
   logo_url,
   homepage_url,
-  detail: {
-    representation: string,
-    revenue: string,
-    address: string,
-    employee_count: string
-  }
+  detail
 ) {
   return {
+    id,
     homepage_url,
     logo_url,
     name,
@@ -77,7 +74,6 @@ export default function Company(props) {
       fields: 'name',
       page_size: 2000
     }
-
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/companies`, {
       params
     })
@@ -85,18 +81,17 @@ export default function Company(props) {
         const names = res.data.companies.map(company => company.name)
         setOptions(names)
       })
-      .catch(err => console.log("asdasd"))
+      .catch(err => console.log(err))
   }, [])
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (value) => {
     setPage(value);
   };
 
   React.useEffect(() => {
     
-
     const params = {
-      fields: "name,region,industry,size,establishment,representation,revenue,address,employee_count,homepage_url,logo_url",
+      fields: "id,name,region,industry,size,establishment,representation,revenue,address,employee_count,homepage_url,logo_url",
       page: page,
       page_size: 20,
     }
@@ -104,11 +99,12 @@ export default function Company(props) {
     if (searchQuery) {
       params.search = searchQuery;
     }
-
+    
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/companies`, { params })
       .then((res) => {
         const trans = res.data.companies.map((company) =>
           createData(
+            company.id,
             company.name,
             company.region,
             company.industry,
@@ -124,7 +120,6 @@ export default function Company(props) {
             }
           )
         )
-
         setTotal(res.data.total)
         setData(trans)
       })
@@ -177,8 +172,6 @@ export default function Company(props) {
               }}
               spacing={2}
             >
-              <div></div>
-
               <Stack direction="row" sx={{ gap: 1 }}>
                 <SearchAutoComplete
                   handleSearch={handleSearch}

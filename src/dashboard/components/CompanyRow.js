@@ -3,9 +3,12 @@ import {
   Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Link
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
-export default function CompanyRow({ row }: { row: any }) {
+export default function CompanyRow( { row } ) {
   const theme = useTheme();
+  const navigate = useNavigate()
+
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -16,7 +19,7 @@ export default function CompanyRow({ row }: { row: any }) {
           '&:hover': { backgroundColor: theme.palette.action.selected },
           cursor: 'pointer',
         }}
-        onClick={() => setOpen(!open)}
+        onClick={() => navigate(`/company/${encodeURIComponent(row.name)}`)}
       >
         <TableCell>
           <IconButton aria-label="expand row" size="small">
