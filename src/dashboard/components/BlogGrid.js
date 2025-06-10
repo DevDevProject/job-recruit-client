@@ -27,6 +27,7 @@ import BlogCard from './BlogCard';
 import Header from './Header';
 import axios from 'axios';
 import Latest from './Latest';
+import CustomPagination from '../../shared/components/CustomPagination';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -66,17 +67,13 @@ export default function BlogGrid( {cardData, total, limit, page, handlePageChang
           />
         ))
       }
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pt: 4, width: '100%' }}>
-        <Pagination
-          count={Math.ceil(total / limit)}
-          page={page}
-          onChange={handlePageChange}
-          boundaryCount={3}
-          showFirstButton
-          showLastButton
-        />
-      </Box>
 
+      <CustomPagination
+        total={total}
+        limit={limit}
+        page={page}
+        handlePageChange={handlePageChange}
+      />
     </Grid>
   );
 }

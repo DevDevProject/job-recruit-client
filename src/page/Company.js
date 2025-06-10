@@ -84,12 +84,12 @@ export default function Company(props) {
       .catch(err => console.log(err))
   }, [])
 
-  const handlePageChange = (value) => {
+  const handlePageChange = (event, value) => {
     setPage(value);
   };
 
   React.useEffect(() => {
-    
+    console.log(page)
     const params = {
       fields: "id,name,region,industry,size,establishment,representation,revenue,address,employee_count,homepage_url,logo_url",
       page: page,
@@ -136,7 +136,6 @@ export default function Company(props) {
       <Box sx={{ display: 'flex' }}>
         <SideMenu />
         <AppNavbar />
-        {/* Main content */}
         <Box
           component="main"
           sx={(theme) => ({

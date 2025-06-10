@@ -18,6 +18,7 @@ import Stack from '@mui/material/Stack';
 import SearchAutoComplete from './SearchAutoComplete';
 import CompanyCard from '../../company/components/CompanyCard';
 import { Grid } from '@mui/material';
+import CustomPagination from '../../shared/components/CustomPagination';
 
 export default function CompanyTable({ data = [], page, handlePageChange, total }) {
 
@@ -37,19 +38,12 @@ export default function CompanyTable({ data = [], page, handlePageChange, total 
           </Grid>
         ))}
       </Grid>
-
-
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pt: 4, width: '100%' }}>
-        <Pagination
-          variant='outlined'
-          count={Math.ceil(total / 20)}
-          page={page}
-          onChange={handlePageChange}
-          boundaryCount={3}
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      <CustomPagination 
+        total={total}
+        limit={20}
+        page={page}
+        handlePageChange={handlePageChange}
+      />
     </Box>
   );
 }
