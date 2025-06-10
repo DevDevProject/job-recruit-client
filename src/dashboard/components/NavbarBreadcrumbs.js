@@ -36,6 +36,7 @@ export default function NavbarBreadcrumbs() {
       )}
 
       {pathnames.map((value, index) => {
+        const decodedValue = decodeURIComponent(value);
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
         const isLast = index === pathnames.length - 1;
@@ -46,7 +47,7 @@ export default function NavbarBreadcrumbs() {
             variant="body1"
             sx={{ color: 'text.primary', fontWeight: 600 }}
           >
-            {value.charAt(0).toUpperCase() + value.slice(1)}
+            {decodedValue.charAt(0).toUpperCase() + decodedValue.slice(1)}
           </Typography>
         ) : (
           <Link
@@ -55,7 +56,7 @@ export default function NavbarBreadcrumbs() {
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <Typography variant="body1">
-              {value.charAt(0).toUpperCase() + value.slice(1)}
+              {decodedValue.charAt(0).toUpperCase() + decodedValue.slice(1)}
             </Typography>
           </Link>
         );
