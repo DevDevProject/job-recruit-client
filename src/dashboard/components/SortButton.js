@@ -21,7 +21,7 @@ export default function SortButton({ sort, onChange }) {
           autoWidth
           label="sort"
         >
-          <MenuItem value='latest'>최근 등록 순</MenuItem>
+          <MenuItem value='created_at'>최근 등록 순</MenuItem>
           <MenuItem value='deadline'>마감 임박 순</MenuItem>
           <MenuItem value='popular'>인기순</MenuItem>
         </Select>

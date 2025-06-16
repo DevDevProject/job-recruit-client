@@ -10,11 +10,11 @@ import CustomizedDataGrid from './CustomizedDataGrid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect } from 'react'
-import { useMediaQuery, Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { useMediaQuery, Button, Dialog, DialogTitle, DialogContent, Pagination } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import MultiSelectBox from './MultiSelectBox';
 import SearchIcon from '@mui/icons-material/Search';
-import {categories, locations, industries, stacks, experiences, types} from '../internals/data/RecruitOptions';
+import { categories, locations, industries, stacks, experiences, types } from '../internals/data/RecruitOptions';
 import AutoCompleteSelect from './AutoCompleteSelect';
 import axios from 'axios';
 import SortButton from './SortButton';
@@ -22,8 +22,13 @@ import ChartCategory from './ChartCategory';
 import ChartStack from './ChartStack';
 import SingleSelectBox from './SingleSelectBox';
 import SelectPopup from './SelectPopup';
+import RecruitPost from '../../recruit/components/RecruitPost';
+import { useNavigate } from 'react-router-dom';
+import CustomPagination from '../../shared/components/CustomPagination';
+
 
 export default function RecruitMain() {
+  const navigate = useNavigate()
 
   const [type, setType] = React.useState([]);
   const [category, setCategory] = React.useState([]);
@@ -40,17 +45,8 @@ export default function RecruitMain() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rowCount, setRowCount] = useState(0);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState(0);
-
-  const [filterState, setFilterState] = React.useState({
-    type: [],
-    category: [],
-    experience: [],
-    stack: [],
-    location: [],
-    companyType: [],
-  });
 
   function clearCondition() {
     setType([]);
@@ -83,16 +79,21 @@ export default function RecruitMain() {
         }
       }
     )
-        .then((res) => {
-            setRows(res.data.recruits)
-            setRowCount(res.data.total_count)
-            setTotalCount(res.data.total_count)
-            setLoading(false)
-        })
-        .catch((err) => {
-            setLoading(false)
-        })
+      .then((res) => {
+        setRows(res.data.recruits)
+        setRowCount(res.data.total_count)
+        setTotalCount(res.data.total_count)
+        setLoading(false)
+        console.log(rows)
+      })
+      .catch((err) => {
+        setLoading(false)
+      })
   }, [page, search])
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -194,25 +195,40 @@ export default function RecruitMain() {
           </Typography>
 
           <Stack direction="row" spacing={1}>
-            <SortButton 
+            <SortButton
               sort={sort}
               onChange={setSort}
             />
           </Stack>
         </Stack>
       </Grid>
-      <Grid container spacing={2} columns={1}>
-        <Grid size={{ xs: 12, lg: 9 }}>
-          <CustomizedDataGrid 
-            rows={rows}
-            loading={loading}
-            page={page}
-            rowCount={rowCount}
-            setPage={setPage}
-          />
-        </Grid>
-        
+      <Grid container spacing={2} justifyContent="start">
+        {
+          rows.map(row => (
+            <Grid item
+              size={{
+                xs: 12,
+                md: 6
+              }}
+              sx={{
+                cursor: 'pointer'
+              }}
+              onClick={() => navigate(`/recruit/${row.id}`)}
+            >
+              <RecruitPost 
+                row={row} 
+                maxTechStacks={5} 
+              />
+            </Grid>
+          ))
+        }
       </Grid>
+      <CustomPagination 
+        total={totalCount}
+        limit={20}
+        page={page}
+        handlePageChange={handlePageChange}
+      />
     </Box>
   );
 }

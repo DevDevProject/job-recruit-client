@@ -66,10 +66,10 @@ export default function CompanyHeader({ company, options }) {
         }}
       >
         {[
-          { label: '경력', value: options.experience },
-          { label: '지역', value: company.location },
-          { label: '고용 타입', value: options.type },
-          { label: '직군', value: options.category },
+          { label: '경력', value: options.experience ?? '경력 무관' },
+          { label: '지역', value: company.location ?? '서울' },
+          { label: '고용 타입', value: options.type ?? '정규직' },
+          { label: '직군', value: options.category ?? 'Backend' },
         ].map((item) => (
           <Box
             key={item.label}

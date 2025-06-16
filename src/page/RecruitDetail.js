@@ -20,6 +20,7 @@ import { Helmet } from 'react-helmet';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 import CompanyHeader from '../dashboard/components/RecruitDetailHeader';
+import RecruitPostImage from '../recruit/components/RecruitPostImage';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -104,7 +105,6 @@ function DetailContent( { company, setCompany } ) {
         company={company}
         options={options}
       />
-
       {detail.responsibility && (
         <div className='recruit-body'>
           <Typography variant='h2'>주요 업무</Typography>
@@ -139,6 +139,7 @@ function DetailContent( { company, setCompany } ) {
           {detail.process.split('\n').map(line => line.trimStart()).join('\n')}
         </div>
       )}
+      <img src={"/test.png"}></img>
       <div className='right-bottom-fix'>
         <Button sx={{
           backgroundColor: 'primary.main',

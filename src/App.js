@@ -11,6 +11,7 @@ import CompanyTable from "./dashboard/components/CompanyTable";
 import RecruitDetail from "./page/RecruitDetail";
 import SignIn from "./page/SignIn";
 import CompanyDetail from "./page/CompanyDetail";
+import CompanyRecruits from "./page/CompanyRecruits";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/recruit/:id" element={<RecruitDetail />}></Route>
           <Route path="/company" element={<Company />}></Route>
           <Route path="/company/:companyName" element={<CompanyDetail />}></Route>
+          <Route path="/:companyName/recruits" element={<CompanyRecruits />}></Route>
           <Route path="/blog" element={<Blogs />}></Route>
           <Route path="/add/tech-blog" element={<BlogAdd />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
