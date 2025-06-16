@@ -7,18 +7,15 @@ import AppNavbar from '../dashboard/components/AppNavbar';
 import Header from '../dashboard/components/Header';
 import SideMenu from '../dashboard/components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Button, CardMedia, Typography } from '@mui/material';
 import axios from 'axios';
-import { red } from '@mui/material/colors';
+import RelatedCompany from '../company/components/RelatedCompany';
+import BlogRecruitButtons from '../company/BlogRecruitButtons';
 
 export default function CompanyDetail(props) {
   const [data, setData] = React.useState({})
-
-  const [count, setCount] = React.useState(0)
 
   const { companyName: encodedName } = useParams();
   const companyName = decodeURIComponent(encodedName || '');
@@ -34,7 +31,7 @@ export default function CompanyDetail(props) {
         setData(res.data)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [companyName])
 
   return (
     <>
@@ -115,13 +112,18 @@ export default function CompanyDetail(props) {
                       fontSize: '1.2rem',
                     }}
                   >
-                    <Typography variant="body2" color='#b71c1c'>
-                      채용 중
-                    </Typography>
+                    { data.recruit_count ? (
+                      <Typography variant="body2" color='#4169e1'>
+                        채용 중
+                      </Typography>) :
+                      (
+                      <Typography variant="body2" color='#b71c1c'>
+                          채용 마감
+                      </Typography>
+                      )
+                    }
                   </Box>
                 </Box>
-
-                {/* 오른쪽 정보 박스 */}
                 <Box
                   sx={{
                     height: { xs: 'auto', md: 399 },
@@ -173,59 +175,12 @@ export default function CompanyDetail(props) {
                   ))}
                 </Box>
               </Stack>
-              <Stack direction={{ xs: 'column', md: 'row' }}
-                spacing={4}
-                sx={{
-                  width: '100%',
-                  maxWidth: '900px',
-                  mx: 'auto',
-                  px: 2,
-                  alignItems: 'stretch', // 세로 정렬 기준 맞춤
-                }}>
-                <Box
-                  sx={{
-                    position: 'relative',
-                    width: 399,
-                    height: 399,
-                    mx: 'auto',
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    href={`/jobs?company=${encodeURIComponent(data.name)}`}
-                    sx={{
-                      flex: 1,
-                      py: 1.5,
-                      fontWeight: 'bold',
-                      fontSize: '1rem',
-                      borderRadius: 2,
-                      boxShadow: 2,
-                      width: '100%'
-                    }}
-                  >
-                    채용 공고 보러가기 ({data.recruit_count ?? 0})
-                  </Button>
-                </Box>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  href={`/blog?company=${encodeURIComponent(data.name)}`}
-                  sx={{
-                    flex: 1,
-                    py: 1.5,
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    borderRadius: 2,
-                    boxShadow: 1,
-                    borderWidth: 2,
-                  }}
-                >
-                  블로그 보러가기 ({data.blog_count ?? 0})
-                </Button>
-              </Stack>
-
-
+              <BlogRecruitButtons 
+                name={data.name}
+                blog_count={data.blog_count}
+                recruit_count={data.recruit_count}
+              />
+              {data.id && <RelatedCompany companyId={data.id} />}
             </Stack>
           </Box>
         </Box>

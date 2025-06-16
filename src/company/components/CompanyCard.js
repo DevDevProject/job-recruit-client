@@ -2,7 +2,7 @@ import { Card, CardContent, Stack, Typography, Box, IconButton } from '@mui/mate
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CompanyCard = ({ row }) => {
+const CompanyCard = ( { row } ) => {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ const CompanyCard = ({ row }) => {
       <IconButton aria-label="expand row" size="small">
           <img
             src={row.logo_url ?? "/company_logo.png"}
-            alt={row.name + " logo"}
+            alt={row.name ?? "undefined" + " logo"}
             style={{
               width: 50,
               height: 50,
@@ -41,7 +41,7 @@ const CompanyCard = ({ row }) => {
           sx={{ cursor: 'pointer', fontWeight: 600, textAlign: 'start' }}
           onClick={() => navigate(`/company/${row.name}`)}
         >
-          {row.name}
+          {row.name ?? "undefined"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {row.size ?? '기타'} · {row.industry ?? '기타'}

@@ -22,6 +22,8 @@ import CustomPagination from '../../shared/components/CustomPagination';
 
 export default function CompanyTable({ data = [], page, handlePageChange, total }) {
 
+  console.log("data", data)
+
   return (
     <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 4 }, py: 3 }}>
       <Grid container spacing={2}>
