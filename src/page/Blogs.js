@@ -232,7 +232,7 @@ export default function Blogs(props) {
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/blogs`, { params })
       .then((res) => {
         setCardData(res.data.blogs)
-        setTotal(res.data.total)
+        setTotal(res.data.total_count)
       })
       .catch((err) => {
         console.log("data loading failed", err);

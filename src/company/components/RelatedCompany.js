@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function RelatedCompany( { companyId } ) {
 
-  console.log(companyId)
   const [data, setData] = useState([])
   
   useEffect(() => {

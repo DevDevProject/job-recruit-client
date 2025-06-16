@@ -64,7 +64,6 @@ function Author({ author, date }: { author: { name: string; avatar: string }, da
 
 export default function BlogCard({ img, category, url, title, description, author, date, focusedCardIndex, handleFocus, handleBlur }) {
   const handleClick = () => {
-    console.log(author)
     window.open(url, '_blank');
   };
 

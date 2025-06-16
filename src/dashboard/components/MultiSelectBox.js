@@ -26,7 +26,6 @@ export default function MultiSelectBox({ placeholder, options, value, onChange }
       target: { value },
     } = event;
     const newValue = typeof value === 'string' ? value.split(',') : value;
-    console.log('✅ 현재 선택된 값:', newValue);
     onChange(newValue);
   };
 

@@ -84,7 +84,6 @@ export default function RecruitMain() {
         setRowCount(res.data.total_count)
         setTotalCount(res.data.total_count)
         setLoading(false)
-        console.log(rows)
       })
       .catch((err) => {
         setLoading(false)

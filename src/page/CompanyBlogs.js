@@ -40,13 +40,11 @@ export default function CompanyBlogs(props) {
   useEffect(() => {
     const params = {
       page,
-      size: 10
+      limit
     }
 
-    // axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/${companyName}/blogs`, { params })
-    axios.get(`http://localhost:8001/api/blog/${companyName}/blogs`, { params })
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/${companyName}/blogs`, { params })
       .then(res => {
-        console.log(res.data)
         setData(res.data.blogs)
         setTotalCount(res.data.total_count)
       }).catch(err => console.log(err))
