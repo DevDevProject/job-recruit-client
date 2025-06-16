@@ -56,3 +56,31 @@
   padding: 12px 20px;
   border: none;
 }
+
+.company-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+  max-width: 600px;
+}
+
+.company-image {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+.company-info h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.company-info p {
+  margin: 4px 0;
+  color: gray;
+}
