@@ -12,6 +12,7 @@ import RecruitDetail from "./page/RecruitDetail";
 import SignIn from "./page/SignIn";
 import CompanyDetail from "./page/CompanyDetail";
 import CompanyRecruits from "./page/CompanyRecruits";
+import CompanyBlogs from "./page/CompanyBlogs";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/company" element={<Company />}></Route>
           <Route path="/company/:companyName" element={<CompanyDetail />}></Route>
           <Route path="/:companyName/recruits" element={<CompanyRecruits />}></Route>
+          <Route path="/:companyName/blogs" element={<CompanyBlogs />}></Route>
           <Route path="/blog" element={<Blogs />}></Route>
           <Route path="/add/tech-blog" element={<BlogAdd />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>

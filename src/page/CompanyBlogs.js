@@ -17,6 +17,7 @@ import {
   datePickersCustomizations,
   treeViewCustomizations,
 } from '../dashboard/theme/customizations';
+import BlogGrid from "../dashboard/components/BlogGrid";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -25,13 +26,15 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-export default function CompanyRecruits(props) {
+export default function CompanyBlogs(props) {
   const { companyName: encodedName } = useParams();
   const companyName = decodeURIComponent(encodedName || '');
   const navigate = useNavigate();
 
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(20)
+
   const [totalCount, setTotalCount] = useState(0)
 
   useEffect(() => {
@@ -40,9 +43,11 @@ export default function CompanyRecruits(props) {
       size: 10
     }
 
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/${companyName}/recruits`, { params })
+    // axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/${companyName}/blogs`, { params })
+    axios.get(`http://localhost:8001/api/blog/${companyName}/blogs`, { params })
       .then(res => {
-        setData(res.data.recruits)
+        console.log(res.data)
+        setData(res.data.blogs)
         setTotalCount(res.data.total_count)
       }).catch(err => console.log(err))
   }, [companyName, page])
@@ -54,7 +59,7 @@ export default function CompanyRecruits(props) {
   return (
     <>
       <Helmet>
-        <title>{`${companyName} 채용 공고 - AllDevHub`}</title>
+        <title>{`${companyName} 기술 블로그 - AllDevHub`}</title>
       </Helmet>
       <AppTheme {...props} themeComponents={xThemeComponents}>
         <CssBaseline enableColorScheme />
@@ -71,7 +76,6 @@ export default function CompanyRecruits(props) {
               overflow: 'auto',
             })}
           >
-
             <Stack
               spacing={2}
               sx={{
@@ -90,39 +94,23 @@ export default function CompanyRecruits(props) {
                 >
                   <Header />
                   <Typography component="h2" variant="h6">
-                    공고 {" "}
+                    전체 {" "}
                     <Box component="span" sx={{ color: 'success.main', fontWeight: 600 }}>
                       {totalCount.toLocaleString()}
                     </Box>
                     개
                   </Typography>
                   <Grid container spacing={2} justifyContent="start">
-                    {
-                      data.map(row => (
-                        <Grid item
-                          size={{
-                            xs: 12,
-                            md: 6
-                          }}
-                          sx={{
-                            cursor: 'pointer'
-                          }}
-                          onClick={() => navigate(`/recruit/${row.id}`)}
-                        >
-                          <RecruitPost
-                            row={row}
-                            maxTechStacks={5}
-                          />
-                        </Grid>
-                      ))
-                    }
+                    
+                      <BlogGrid
+                        cardData={data}
+                        total={totalCount}
+                        limit={limit}
+                        page={page}
+                        handlePageChange={handlePageChange}
+                      />
+                    
                   </Grid>
-                  <CustomPagination
-                    total={totalCount}
-                    limit={10}
-                    page={page}
-                    handlePageChange={handlePageChange}
-                  />
                 </Grid>
               </Box>
             </Stack>
