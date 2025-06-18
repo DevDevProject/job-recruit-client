@@ -23,3 +23,5 @@ export const experiences = [
 export const types = [
     "정규직", "계약직", "인턴"
 ]
+
+export const companyTypes = "대기업,중소기업,강소기업,중견기업,스타트업,벤처기업,외국기업,외국계기업"

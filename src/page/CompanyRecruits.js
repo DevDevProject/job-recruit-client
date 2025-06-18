@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet";
 import { alpha } from '@mui/material/styles';
-import AppTheme from "../shared-theme/AppTheme";
-import { Box, CssBaseline, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import SideMenu from "../dashboard/components/SideMenu";
 import AppNavbar from "../dashboard/components/AppNavbar";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,19 +10,8 @@ import { useEffect, useState } from "react";
 import CustomPagination from "../shared/components/CustomPagination";
 import RecruitPost from "../recruit/components/RecruitPost";
 
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from '../dashboard/theme/customizations';
-
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
+import { companyTypes } from "../commons/data/RecruitOptions";
+import MetaTag from "../shared/components/MetaTag";
 
 export default function CompanyRecruits(props) {
   const { companyName: encodedName } = useParams();
@@ -53,14 +41,7 @@ export default function CompanyRecruits(props) {
 
   return (
     <>
-      <Helmet>
-        <title>{`${companyName} 채용 공고 - AllDevHub`}</title>
-      </Helmet>
-      <AppTheme {...props} themeComponents={xThemeComponents}>
-        <CssBaseline enableColorScheme />
-        <Box sx={{ display: 'flex' }}>
-          <SideMenu />
-          <AppNavbar />
+        <Box sx={{ display: 'flex', mt: 2 }}>
           <Box
             component="main"
             sx={(theme) => ({
@@ -128,7 +109,13 @@ export default function CompanyRecruits(props) {
             </Stack>
           </Box>
         </Box>
-      </AppTheme>
+        <MetaTag
+          title={`${companyName} 채용 공고 - AllDevHub`}
+          description={companyTypes}
+          keywords={companyTypes}
+          image="https://alldevhub.com/assets/preview.png"
+          url="https://alldevhub.com"
+      />
     </>
   )
 }

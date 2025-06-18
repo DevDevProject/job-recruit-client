@@ -11,27 +11,12 @@ export default function BlogHeader({ selectedCategory, setSelectedCategory, sear
 
   return (
     <div>
-      <Header />
       <div>
         <Typography variant="h1" gutterBottom>
           기술 블로그
         </Typography>
         <Typography>여러 기업의 최신 관심사를 찾아보세요.</Typography>
       </div>
-      <Box
-        sx={{
-          display: { xs: 'flex', sm: 'none' },
-          flexDirection: 'row',
-          gap: 1,
-          width: { xs: '100%', md: 'fit-content' },
-          overflow: 'auto',
-        }}
-      >
-        <Search />
-        <IconButton size="small" aria-label="RSS feed">
-          <RssFeedRoundedIcon />
-        </IconButton>
-      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -45,7 +30,6 @@ export default function BlogHeader({ selectedCategory, setSelectedCategory, sear
       >
           <Box
             sx={{
-              // display: 'inline-flex',
               flexDirection: 'row',
               gap: 3,
               overflow: 'auto',

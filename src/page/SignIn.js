@@ -5,34 +5,14 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import SignInCard from '../dashboard/components/SignInCard';
 import Content from '../dashboard/components/Content';
-import SideMenu from '../dashboard/components/SideMenu';
-import AppNavbar from '../dashboard/components/AppNavbar';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from '../dashboard/theme/customizations';
 import Header from '../dashboard/components/Header';
 
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
 
 export default function SignIn(props) {
   return (
-    <AppTheme {...props} themeComponents={xThemeComponents}>
-      <CssBaseline enableColorScheme />
-
       <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-        <SideMenu />
-        <AppNavbar />
-        {/* Main content */}
         <Box
           component="main"
           sx={(theme) => ({
@@ -108,7 +88,5 @@ export default function SignIn(props) {
           </Stack>
         </Box>
       </Box>
-
-    </AppTheme>
   );
 }

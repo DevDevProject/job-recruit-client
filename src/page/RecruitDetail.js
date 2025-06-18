@@ -1,84 +1,69 @@
 import * as React from 'react';
 import { alpha } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../dashboard/components/AppNavbar';
 import Header from '../dashboard/components/Header';
 import SideMenu from '../dashboard/components/SideMenu';
-import AppTheme from '../shared-theme/AppTheme';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useParams } from 'react-router-dom';
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from '../dashboard/theme/customizations';
-import { Helmet } from 'react-helmet';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 import CompanyHeader from '../dashboard/components/RecruitDetailHeader';
-import RecruitPostImage from '../recruit/components/RecruitPostImage';
-
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
+import MetaTag from '../shared/components/MetaTag';
+import { stacks } from '../commons/data/RecruitOptions';
 
 export default function RecruitDetail(props) {
   const [company, setCompany] = React.useState({})
 
   return (
     <>
-      <Helmet>
-        <title>{company.name ?? ''} 채용 정보 - AllDevHub</title>
-      </Helmet>
-      <AppTheme {...props} themeComponents={xThemeComponents}>
-        <CssBaseline enableColorScheme />
-        <Box sx={{ display: 'flex' }}>
-          <SideMenu />
-          <AppNavbar />
-          <Box
-            component="main"
-            sx={(theme) => ({
-              flexGrow: 1,
-              backgroundColor: theme.vars
-                ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-                : alpha(theme.palette.background.default, 1),
-              overflow: 'auto',
-            })}
+      <Box sx={{ display: 'flex', mt: 3 }}>
+        <SideMenu />
+        <AppNavbar />
+        <Box
+          component="main"
+          sx={(theme) => ({
+            flexGrow: 1,
+            backgroundColor: theme.vars
+              ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+              : alpha(theme.palette.background.default, 1),
+            overflow: 'auto',
+          })}
+        >
+          <Stack
+            spacing={2}
+            sx={{
+              alignItems: 'center',
+              mx: 3,
+              pb: 5,
+              mt: { xs: 8, md: 0 },
+            }}
           >
-            <Stack
-              spacing={2}
-              sx={{
-                alignItems: 'center',
-                mx: 3,
-                pb: 5,
-                mt: { xs: 8, md: 0 },
-              }}
-            >
-              <Header />
-              <DetailContent
-                company={company}
-                setCompany={setCompany}
-              />
+            <Header />
+            <DetailContent
+              company={company}
+              setCompany={setCompany}
+            />
 
-            </Stack>
-          </Box>
+          </Stack>
         </Box>
-      </AppTheme>
+      </Box>
+      <MetaTag
+          title={`${company.name ?? ''} 채용 정보 - AllDevHub`}
+          description={`${company.name ?? ''}의 채용 공고입니다.`}
+          keywords={stacks}
+          image="https://alldevhub.com/assets/preview.png"
+          url="https://alldevhub.com"
+      />
     </>
   );
 }
 
-function DetailContent( { company, setCompany } ) {
+function DetailContent({ company, setCompany }) {
   const params = useParams();
 
-  
+
   const [detail, setDetail] = React.useState('')
   const [options, setOptions] = React.useState('')
 

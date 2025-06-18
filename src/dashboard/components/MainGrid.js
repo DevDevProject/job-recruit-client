@@ -9,7 +9,7 @@ import ChartStack from './ChartStack';
 export default function MainGrid() {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 2, mt: 5 }}>
+      <Typography component="h1" variant="h2" sx={{ mb: 5, mt: 5 }}>
         최신 IT 기업의{' '}
         <Box component="span" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
           트렌드
@@ -19,11 +19,6 @@ export default function MainGrid() {
           관심사
         </Box>
         를 한 눈에 파악할 수 있어요
-      </Typography>
-
-
-      <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        통계
       </Typography>
       <Grid
         container

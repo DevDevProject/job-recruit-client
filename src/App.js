@@ -1,5 +1,3 @@
-import * as React from "react"
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import './App.css';
 import Dashboard from "./page/Dashboard";
 import { Route, Routes } from "react-router-dom";
@@ -7,15 +5,34 @@ import Recruit from "./page/Recruit";
 import BlogAdd from "./page/BlogAdd"
 import Blogs from "./page/Blogs";
 import Company from "./page/Company";
-import CompanyTable from "./dashboard/components/CompanyTable";
 import RecruitDetail from "./page/RecruitDetail";
 import SignIn from "./page/SignIn";
 import CompanyDetail from "./page/CompanyDetail";
 import CompanyRecruits from "./page/CompanyRecruits";
 import CompanyBlogs from "./page/CompanyBlogs";
 
+import CssBaseline from "@mui/material/CssBaseline";
+import AppTheme from "./shared-theme/AppTheme";
+import {
+  chartsCustomizations,
+  dataGridCustomizations,
+  datePickersCustomizations,
+  treeViewCustomizations,
+} from './dashboard/theme/customizations';
+import TopNavBar from './commons/components/TopNavBar';
+
+const xThemeComponents = {
+  ...chartsCustomizations,
+  ...dataGridCustomizations,
+  ...datePickersCustomizations,
+  ...treeViewCustomizations,
+};
+
 function App() {
   return (
+    <AppTheme themeComponents={xThemeComponents}>
+      <CssBaseline enableColorScheme />
+      <TopNavBar />
       <div className="App">
         <Routes>
           <Route path="/" element={<Dashboard />}></Route>
@@ -30,7 +47,7 @@ function App() {
           <Route path="/signin" element={<SignIn />}></Route>
         </Routes>
       </div>
-    
+    </AppTheme>
   );
 }
 

@@ -14,7 +14,7 @@ import { useMediaQuery, Button, Dialog, DialogTitle, DialogContent, Pagination }
 import { useTheme } from '@mui/material/styles';
 import MultiSelectBox from './MultiSelectBox';
 import SearchIcon from '@mui/icons-material/Search';
-import { categories, locations, industries, stacks, experiences, types } from '../internals/data/RecruitOptions';
+import { categories, locations, industries, stacks, experiences, types } from '../../commons/data/RecruitOptions';
 import AutoCompleteSelect from './AutoCompleteSelect';
 import axios from 'axios';
 import SortButton from './SortButton';
@@ -96,10 +96,6 @@ export default function RecruitMain() {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      {/* cards */}
-      <Typography component="h2" variant="h6" sx={{ mb: 2 }} align='start'>
-        검색 옵션
-      </Typography>
       <Grid
         container
         spacing={2}

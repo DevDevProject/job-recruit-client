@@ -9,7 +9,7 @@ export default function SearchAutoComplete({ options, handleSearch }) {
     const [query, setQuery] = React.useState('');
 
     return (
-        <FormControl sx={{ width: { xs: '100%', md: '30ch' } }} variant="outlined">
+        <FormControl sx={{ width: { xs: '50%', md: '30ch' } }} variant="outlined">
             <Autocomplete
                 freeSolo
                 disableClearable

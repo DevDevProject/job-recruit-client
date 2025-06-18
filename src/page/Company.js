@@ -1,36 +1,19 @@
 import * as React from 'react';
 
 import { alpha } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../dashboard/components/AppNavbar';
 import Header from '../dashboard/components/Header';
-import MainGrid from '../dashboard/components/MainGrid';
 import SideMenu from '../dashboard/components/SideMenu';
-import AppTheme from '../shared-theme/AppTheme';
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from '../dashboard/theme/customizations';
-import Search from '../dashboard/components/Search';
-import Table from '../dashboard/components/CompanyTable';
 
 import CompanyTable from '../dashboard/components/CompanyTable';
 import { Typography } from '@mui/material';
 
 import axios from 'axios';
 import SearchAutoComplete from '../dashboard/components/SearchAutoComplete';
-import { Helmet } from 'react-helmet';
-
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
+import MetaTag from '../shared/components/MetaTag';
+import { companyTypes } from '../commons/data/RecruitOptions';
 
 function createData(
   id,
@@ -89,7 +72,6 @@ export default function Company(props) {
   };
 
   React.useEffect(() => {
-    console.log(page)
     const params = {
       fields: "id,name,region,industry,size,establishment,representation,revenue,address,employee_count,homepage_url,logo_url",
       page: page,
@@ -99,7 +81,7 @@ export default function Company(props) {
     if (searchQuery) {
       params.search = searchQuery;
     }
-    
+
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/companies`, { params })
       .then((res) => {
         const trans = res.data.companies.map((company) =>
@@ -128,14 +110,7 @@ export default function Company(props) {
 
   return (
     <>
-    <Helmet>
-      <title>기업 정보 - AllDevHub</title>
-    </Helmet>
-    <AppTheme {...props} themeComponents={xThemeComponents}>
-      <CssBaseline enableColorScheme />
-      <Box sx={{ display: 'flex' }}>
-        <SideMenu />
-        <AppNavbar />
+      <Box sx={{ display: 'flex', mt: 10 }}>
         <Box
           component="main"
           sx={(theme) => ({
@@ -155,29 +130,30 @@ export default function Company(props) {
               mt: { xs: 8, md: 0 },
             }}
           >
-            <Header />
             <Typography variant='h4'>
               기업 정보
             </Typography>
             <Stack
+              spacing={2}
               direction="row"
               sx={{
-                display: { xs: 'none', md: 'flex' },
-                width: '100%',
-                alignItems: { xs: 'flex-start', md: 'center' },
+                width: '100%', // 이 Stack이 부모 Stack의 전체 너비를 차지하게 합니다.
                 justifyContent: 'space-between',
-                maxWidth: { sm: '100%', md: '1700px' },
-                pt: 1.5,
-              }}
-              spacing={2}
-            >
-              <Stack direction="row" sx={{ gap: 1 }}>
-                <SearchAutoComplete
-                  handleSearch={handleSearch}
-                  options={options}
-                />
-              </Stack>
+                px: { xs: 1, sm: 2, md: 20 }, py: 3 
+              }}>
+              <Typography component="h2" variant="h6">
+                전체 {" "}
+                <Box component="span" sx={{ color: 'success.main', fontWeight: 600 }}>
+                  {total.toLocaleString()}
+                </Box>
+                개
+              </Typography>
+              <SearchAutoComplete
+                handleSearch={handleSearch}
+                options={options}
+              />
             </Stack>
+
             <CompanyTable
               data={data}
               page={page}
@@ -187,7 +163,13 @@ export default function Company(props) {
           </Stack>
         </Box>
       </Box>
-    </AppTheme>
+      <MetaTag
+        title='기업 정보 - AllDevHub'
+        description={companyTypes}
+        keywords={companyTypes}
+        image="https://alldevhub.com/assets/preview.png"
+        url="https://alldevhub.com"
+      />
     </>
   );
 }
