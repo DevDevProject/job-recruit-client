@@ -26,6 +26,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-horizontal-scrolling-menu": "^8.2.0",
     "react-router-dom": "^7.5.0",
     "react-scripts": "5.0.1",
@@ -57,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "xmlbuilder2": "^3.1.1"
   }
 }
