@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { GoogleIcon, FacebookIcon, SitemarkIcon, AppleIcon, GitHubIcon, KakaoIcon } from './CustomIcons';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -96,9 +96,9 @@ export default function SignInCard() {
         variant="h4"
         sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
       >
-        Sign in
+        로그인
       </Typography>
-      <Box
+      {/* <Box
         component="form"
         onSubmit={handleSubmit}
         noValidate
@@ -169,25 +169,55 @@ export default function SignInCard() {
             </Link>
           </span>
         </Typography>
-      </Box>
-      <Divider>or</Divider>
+      </Box> */}
+      {/* <Divider>or</Divider> */}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
-          fullWidth
           variant="outlined"
-          onClick={() => alert('Sign in with Google')}
           startIcon={<GoogleIcon />}
+          // onClick={handleLogin}
+          sx={{
+            backgroundColor: 'white',
+            fontWeight: 600,
+            borderColor: '#ddd',
+          }}
         >
-          Sign in with Google
+          Google 계정으로 로그인
         </Button>
         <Button
+          variant="outlined"
+          startIcon={<GitHubIcon />}
+          // onClick={handleLogin}
+          sx={{
+            backgroundColor: 'white',
+            textTransform: 'none',
+            fontWeight: 600,
+            borderColor: '#ddd',
+          }}
+        >
+          GitHub 계정으로 로그인
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<KakaoIcon sx={{ ml: '-5px' }}/>}
+          // onClick={handleLogin}
+          sx={{
+            backgroundColor: 'white',
+            textTransform: 'none',
+            fontWeight: 600,
+            borderColor: '#ddd',
+          }}
+        >
+          Kakao 계정으로 로그인
+        </Button>
+        {/* <Button
           fullWidth
           variant="outlined"
           onClick={() => alert('Sign in with Facebook')}
           startIcon={<FacebookIcon />}
         >
           Sign in with Facebook
-        </Button>
+        </Button> */}
       </Box>
     </Card>
   );

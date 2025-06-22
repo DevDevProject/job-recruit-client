@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../dashboard/components/AppNavbar';
 import Header from '../dashboard/components/Header';
-import SideMenu from '../dashboard/components/SideMenu';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { useParams } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
@@ -19,8 +18,6 @@ export default function RecruitDetail(props) {
   return (
     <>
       <Box sx={{ display: 'flex', mt: 3 }}>
-        <SideMenu />
-        <AppNavbar />
         <Box
           component="main"
           sx={(theme) => ({
@@ -50,11 +47,11 @@ export default function RecruitDetail(props) {
         </Box>
       </Box>
       <MetaTag
-          title={`${company.name ?? ''} 채용 정보 - AllDevHub`}
-          description={`${company.name ?? ''}의 채용 공고입니다.`}
-          keywords={stacks}
-          image="https://alldevhub.com/assets/preview.png"
-          url="https://alldevhub.com"
+        title={`${company.name ?? ''} 채용 정보 - AllDevHub`}
+        description={`${company.name ?? ''}의 채용 공고입니다.`}
+        keywords={stacks}
+        image="https://alldevhub.com/assets/preview.png"
+        url="https://alldevhub.com"
       />
     </>
   );
@@ -90,41 +87,51 @@ function DetailContent({ company, setCompany }) {
         company={company}
         options={options}
       />
-      {detail.responsibility && (
-        <div className='recruit-body'>
-          <Typography variant='h2'>주요 업무</Typography>
-          {detail.responsibility.split('\n').map(line => line.trimStart()).join('\n')}
-        </div>
-      )}
+      {
+        detail.body_url ? (
+          <img src={detail.body_url}></img>
+        ) : (
+      <>
+        {detail.responsibility && (
+          <div className='recruit-body'>
+            <Typography variant='h2'>주요 업무</Typography>
+            {detail.responsibility.split('\n').map(line => line.trimStart()).join('\n')}
+          </div>
+        )}
 
-      {detail.requirement && (
-        <div className='recruit-body'>
-          <Typography variant='h2'>자격 요건</Typography>
-          {detail.requirement.split('\n').map(line => line.trimStart()).join('\n')}
-        </div>
-      )}
+        {detail.requirement && (
+          <div className='recruit-body'>
+            <Typography variant='h2'>자격 요건</Typography>
+            {detail.requirement.split('\n').map(line => line.trimStart()).join('\n')}
+          </div>
+        )}
 
-      {detail.preference && (
-        <div className='recruit-body'>
-          <Typography variant='h2'>우대 사항</Typography>
-          {detail.preference.split('\n').map(line => line.trimStart()).join('\n')}
-        </div>
-      )}
+        {detail.preference && (
+          <div className='recruit-body'>
+            <Typography variant='h2'>우대 사항</Typography>
+            {detail.preference.split('\n').map(line => line.trimStart()).join('\n')}
+          </div>
+        )}
 
-      {detail.benefit && (
-        <div className='recruit-body'>
-          <Typography variant='h2'>복지 및 혜택</Typography>
-          {detail.benefit.split('\n').map(line => line.trimStart()).join('\n')}
-        </div>
-      )}
+        {detail.benefit && (
+          <div className='recruit-body'>
+            <Typography variant='h2'>복지 및 혜택</Typography>
+            {detail.benefit.split('\n').map(line => line.trimStart()).join('\n')}
+          </div>
+        )}
 
-      {detail.process && (
-        <div className='recruit-body'>
-          <Typography variant='h2'>채용 절차</Typography>
-          {detail.process.split('\n').map(line => line.trimStart()).join('\n')}
-        </div>
-      )}
-      <img src={"/test.png"}></img>
+        {detail.process && (
+          <div className='recruit-body'>
+            <Typography variant='h2'>채용 절차</Typography>
+            {detail.process.split('\n').map(line => line.trimStart()).join('\n')}
+          </div>
+        )}
+      </>
+      )
+      }
+
+
+
       <div className='right-bottom-fix'>
         <Button sx={{
           backgroundColor: 'primary.main',

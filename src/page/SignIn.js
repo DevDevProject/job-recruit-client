@@ -12,7 +12,7 @@ import Header from '../dashboard/components/Header';
 
 export default function SignIn(props) {
   return (
-      <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden', mt: 13 }}>
         <Box
           component="main"
           sx={(theme) => ({
@@ -33,7 +33,6 @@ export default function SignIn(props) {
               mt: { xs: 8, md: 0 },
             }}
           >
-            <Header />
             {/* <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} /> */}
             <Stack
               direction="column"
