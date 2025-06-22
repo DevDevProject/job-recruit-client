@@ -28,7 +28,7 @@ export default function TopNavBar() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openSettingsDialog, setOpenSettingsDialog] = useState(false); 
+  const [openSettingsDialog, setOpenSettingsDialog] = useState(false);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,9 +50,9 @@ export default function TopNavBar() {
   };
 
   return (
-    <AppBar 
-      position="fixed" 
-      color="default" 
+    <AppBar
+      position="fixed"
+      color="default"
       elevation={1}
     >
       <Toolbar>
@@ -61,7 +61,7 @@ export default function TopNavBar() {
           onClick={() => navigate('/')}
         >
           <img
-            src={process.env.PUBLIC_URL + '/alldev.png'}
+            src={process.env.PUBLIC_URL + '/web_logo.png'}
             alt="AllDevHub Logo"
             style={{ height: 40, marginRight: 8 }}
           />
@@ -113,31 +113,43 @@ export default function TopNavBar() {
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={() => handleMenuClose(() => navigate('/login'))}>
+                <Typography textAlign="center">로그인 / 회원가입</Typography>
+              </MenuItem>
+
             </Menu>
+
           </Box>
         ) : (
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start' }}>
-            {pages.map((page) => (
-              <Button
-                key={page.label}
-                color="inherit"
-                onClick={() => {
-                  if (page.label === '설정') {
-                    handleOpenSettingsDialog(); // '설정'이면 팝업 열기
-                  } else {
-                    page.action(navigate); // 다른 페이지면 navigate 호출
-                  }
-                }}
-                sx={{ mx: 1, fontWeight: 600 }}
-              >
-                {page.label}
+          <>
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start' }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.label}
+                  color="inherit"
+                  onClick={() => {
+                    if (page.label === '설정') {
+                      handleOpenSettingsDialog(); // '설정'이면 팝업 열기
+                    } else {
+                      page.action(navigate); // 다른 페이지면 navigate 호출
+                    }
+                  }}
+                  sx={{ mx: 1, fontWeight: 600 }}
+                >
+                  {page.label}
+                </Button>
+              ))}
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button color="inherit" onClick={() => navigate('/login')}>
+                로그인 / 회원가입
               </Button>
-            ))}
-          </Box>
+            </Box>
+          </>
         )}
       </Toolbar>
 
-      <SettingPopUp 
+      <SettingPopUp
         open={openSettingsDialog}
         onClose={handleCloseSettingsDialog}
       />
