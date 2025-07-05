@@ -1,5 +1,5 @@
 // TopNavBar.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingPopUp from './SettingPopUp';
+import ProfilePopUp from './ProfilePopUp';
 
 const pages = [
   { label: '채용 공고', action: (navigate) => navigate('/recruit') },
@@ -26,6 +27,26 @@ export default function TopNavBar() {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [anchorProfile, setAnchorProfile] = useState(null);
+
+  const showProfilePopUp = (event) => {
+    console.log("asdasd")
+    setAnchorProfile(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorProfile(null);
+  };
+
+  const open = Boolean(anchorProfile);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem('jwt'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    setIsLoggedIn(false);
+  };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [openSettingsDialog, setOpenSettingsDialog] = useState(false);
@@ -73,16 +94,24 @@ export default function TopNavBar() {
           </Typography>
         </Box>
         {isMobile ? (
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
+            <>
+              <Button onClick={showProfilePopUp}>
+                <AccountCircleIcon />
+              </Button>
+              <ProfilePopUp
+                open={open}
+                anchorEl={anchorProfile}
+                handleClose={handleClose}
+              />
+            </>
             <IconButton
               size="large"
               edge="end"
               color="inherit"
               aria-label="menu"
               onClick={handleMenuOpen}
-              sx={{
-                ml: 2
-              }}
+              
             >
               <MenuIcon />
             </IconButton>
@@ -113,9 +142,22 @@ export default function TopNavBar() {
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
-              <MenuItem onClick={() => handleMenuClose(() => navigate('/login'))}>
-                <Typography textAlign="center">로그인 / 회원가입</Typography>
-              </MenuItem>
+
+              {isLoggedIn ? (
+                <MenuItem onClick={() => handleMenuClose(() => {
+                  localStorage.removeItem('jwt'); // 로그아웃 시 토큰 삭제
+                  navigate('/logout'); // 로그아웃 페이지나 처리 경로로 이동
+                })}>
+                  <Typography
+                    sx={{ color: '#d32f2f' }}
+                    textAlign="center">로그아웃
+                  </Typography>
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => handleMenuClose(() => navigate('/login'))}>
+                  <Typography textAlign="center">로그인 / 회원가입</Typography>
+                </MenuItem>
+              )}
 
             </Menu>
 
@@ -141,9 +183,25 @@ export default function TopNavBar() {
               ))}
             </Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button color="inherit" onClick={() => navigate('/login')}>
-                로그인 / 회원가입
-              </Button>
+              {
+                isLoggedIn ? (
+                  <>
+                    <Button onClick={showProfilePopUp}>
+                      <AccountCircleIcon />
+                    </Button>
+                    <ProfilePopUp
+                      open={open}
+                      anchorEl={anchorProfile}
+                      handleClose={handleClose}
+                    />
+                  </>
+                ) : (
+                  <Button color="inherit" onClick={() => navigate('/signin')}>
+                    로그인 / 회원가입
+                  </Button>
+                )
+              }
+
             </Box>
           </>
         )}

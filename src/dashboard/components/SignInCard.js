@@ -32,59 +32,14 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
+// const BACKEND_URL = 'https://api.alldevhub.com';
+const BACKEND_URL = 'http://localhost:8080';
+
 export default function SignInCard() {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    return isValid;
-  };
+  const loginSocialId = (provider) => {
+    window.location.href = `${BACKEND_URL}/oauth2/authorization/${provider}`;
+  }
 
   return (
     <Card variant="outlined">
@@ -98,84 +53,11 @@ export default function SignInCard() {
       >
         로그인
       </Typography>
-      {/* <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
-      >
-        <FormControl>
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <TextField
-            error={emailError}
-            helperText={emailErrorMessage}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            autoComplete="email"
-            autoFocus
-            required
-            fullWidth
-            variant="outlined"
-            color={emailError ? 'error' : 'primary'}
-          />
-        </FormControl>
-        <FormControl>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'baseline' }}
-            >
-              Forgot your password?
-            </Link>
-          </Box>
-          <TextField
-            error={passwordError}
-            helperText={passwordErrorMessage}
-            name="password"
-            placeholder="••••••"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            autoFocus
-            required
-            fullWidth
-            variant="outlined"
-            color={passwordError ? 'error' : 'primary'}
-          />
-        </FormControl>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <ForgotPassword open={open} handleClose={handleClose} />
-        <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-          Sign in
-        </Button>
-        <Typography sx={{ textAlign: 'center' }}>
-          Don&apos;t have an account?{' '}
-          <span>
-            <Link
-              href="/material-ui/getting-started/templates/sign-in/"
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Sign up
-            </Link>
-          </span>
-        </Typography>
-      </Box> */}
-      {/* <Divider>or</Divider> */}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           variant="outlined"
           startIcon={<GoogleIcon />}
-          // onClick={handleLogin}
+          onClick={() => loginSocialId('google')}
           sx={{
             backgroundColor: 'white',
             fontWeight: 600,
@@ -187,7 +69,7 @@ export default function SignInCard() {
         <Button
           variant="outlined"
           startIcon={<GitHubIcon />}
-          // onClick={handleLogin}
+          onClick={() => loginSocialId('github')}
           sx={{
             backgroundColor: 'white',
             textTransform: 'none',
@@ -200,7 +82,7 @@ export default function SignInCard() {
         <Button
           variant="outlined"
           startIcon={<KakaoIcon sx={{ ml: '-5px' }}/>}
-          // onClick={handleLogin}
+          onClick={() => loginSocialId('kakao')}
           sx={{
             backgroundColor: 'white',
             textTransform: 'none',
@@ -210,14 +92,6 @@ export default function SignInCard() {
         >
           Kakao 계정으로 로그인
         </Button>
-        {/* <Button
-          fullWidth
-          variant="outlined"
-          onClick={() => alert('Sign in with Facebook')}
-          startIcon={<FacebookIcon />}
-        >
-          Sign in with Facebook
-        </Button> */}
       </Box>
     </Card>
   );

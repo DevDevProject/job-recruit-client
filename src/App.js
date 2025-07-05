@@ -20,6 +20,7 @@ import {
   treeViewCustomizations,
 } from './dashboard/theme/customizations';
 import TopNavBar from './commons/components/TopNavBar';
+import OAuth2Redirect from './page/OAuth2Redirect';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -45,6 +46,7 @@ function App() {
           <Route path="/blog" element={<Blogs />}></Route>
           <Route path="/add/tech-blog" element={<BlogAdd />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/oauth2/redirect" element={<OAuth2Redirect />}></Route>
         </Routes>
       </div>
     </AppTheme>
