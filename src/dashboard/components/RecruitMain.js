@@ -25,27 +25,38 @@ import SelectPopup from './SelectPopup';
 import RecruitPost from '../../recruit/components/RecruitPost';
 import { useNavigate } from 'react-router-dom';
 import CustomPagination from '../../shared/components/CustomPagination';
+import { useSearchParams } from 'react-router-dom';
 
 
 export default function RecruitMain() {
   const navigate = useNavigate()
 
-  const [type, setType] = React.useState([]);
-  const [category, setCategory] = React.useState([]);
-  const [experience, setExperience] = React.useState([]);
-  const [stack, setStack] = React.useState([]);
-  const [location, setLocation] = React.useState([]);
-  const [companyType, setCompanyType] = React.useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialPage = parseInt(searchParams.get('page') || '1', 10);
+  const initialSort = searchParams.get('sort') || 'created_at';
+
+  const parseParamArray = (key) => {
+    const value = searchParams.get(key);
+    return value ? value.split(',').filter(Boolean) : [];
+  };
+
+  const [type, setType] = useState(parseParamArray('type'));
+  const [category, setCategory] = useState(parseParamArray('category'));
+  const [experience, setExperience] = useState(parseParamArray('experience'));
+  const [stack, setStack] = useState(parseParamArray('stack'));
+  const [location, setLocation] = useState(parseParamArray('location'));
+  const [companyType, setCompanyType] = useState(parseParamArray('companyType'));
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [totalCount, setTotalCount] = useState(0);
-  const [sort, setSort] = useState('created_at');
+  const [sort, setSort] = useState(initialSort);
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rowCount, setRowCount] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState(0);
 
   function clearCondition() {
@@ -62,7 +73,17 @@ export default function RecruitMain() {
   }
 
   useEffect(() => {
+    const params: any = {
+    page: page.toString(),
+      ...(type.length > 0 && { type: type.join(',') }),
+      ...(category.length > 0 && { category: category.join(',') }),
+      ...(experience.length > 0 && { experience: experience.join(',') }),
+      ...(stack.length > 0 && { stack: stack.join(',') }),
+      ...(location.length > 0 && { location: location.join(',') }),
+      ...(companyType.length > 0 && { companyType: companyType.join(',') }),
+    };
 
+    setSearchParams(params);
     axios.post(
       `${process.env.REACT_APP_SERVER_URL}/api/recruit/search`,
       {
@@ -90,7 +111,7 @@ export default function RecruitMain() {
       })
   }, [page, search])
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (event, value) => {
     setPage(value);
   };
 

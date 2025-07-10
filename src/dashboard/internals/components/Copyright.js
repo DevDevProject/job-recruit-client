@@ -11,12 +11,13 @@ export default function Copyright(props) {
       sx={[
         {
           color: 'text.secondary',
+          mt: 5
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
       ]}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit">
         AllDevHub
       </Link>{' '}
       {new Date().getFullYear()}

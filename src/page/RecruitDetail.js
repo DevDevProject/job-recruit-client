@@ -89,7 +89,9 @@ function DetailContent({ company, setCompany }) {
       />
       {
         detail.body_url ? (
-          <img src={detail.body_url}></img>
+          <div style={{ width: '100%' }}>
+            <img src={detail.body_url} style={{ maxWidth: '100%', height: 'auto' }} />
+          </div>
         ) : (
       <>
         {detail.responsibility && (

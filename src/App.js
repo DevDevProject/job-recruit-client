@@ -21,6 +21,9 @@ import {
 } from './dashboard/theme/customizations';
 import TopNavBar from './commons/components/TopNavBar';
 import OAuth2Redirect from './page/OAuth2Redirect';
+import RecruitSubscription from './page/RecruitSubscription';
+import Copyright from './dashboard/internals/components/Copyright';
+import Contact from './dashboard/internals/components/Contact';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -47,8 +50,11 @@ function App() {
           <Route path="/add/tech-blog" element={<BlogAdd />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/oauth2/redirect" element={<OAuth2Redirect />}></Route>
+          <Route path="/profile/recruit" element={<RecruitSubscription />}></Route>
         </Routes>
       </div>
+      <Copyright />
+      <Contact />
     </AppTheme>
   );
 }
