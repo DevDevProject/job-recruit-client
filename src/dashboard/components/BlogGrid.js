@@ -54,6 +54,7 @@ export default function BlogGrid( {cardData, total, limit, page, handlePageChang
       {
         cardData.map((card) => (
           <BlogCard
+            id={card.id}
             img={card.thumbnail}
             category={card.category}
             url={card.url}

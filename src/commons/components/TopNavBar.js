@@ -31,7 +31,6 @@ export default function TopNavBar() {
   const [anchorProfile, setAnchorProfile] = useState(null);
 
   const showProfilePopUp = (event) => {
-    console.log("asdasd")
     setAnchorProfile(event.currentTarget);
   };
 
@@ -95,23 +94,32 @@ export default function TopNavBar() {
         </Box>
         {isMobile ? (
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
-            <>
-              <Button onClick={showProfilePopUp}>
-                <AccountCircleIcon />
-              </Button>
-              <ProfilePopUp
-                open={open}
-                anchorEl={anchorProfile}
-                handleClose={handleClose}
-              />
-            </>
+            {isLoggedIn ? (
+              <>
+                <Button onClick={showProfilePopUp}>
+                  <AccountCircleIcon />
+                </Button>
+                <ProfilePopUp
+                  open={open}
+                  anchorEl={anchorProfile}
+                  handleClose={handleClose}
+                />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={() => handleMenuClose(() => navigate('/signin'))}>
+                  <Typography textAlign="center">로그인 / 회원가입</Typography>
+                </MenuItem>
+              </>
+            )}
+
             <IconButton
               size="large"
               edge="end"
               color="inherit"
               aria-label="menu"
               onClick={handleMenuOpen}
-              
+
             >
               <MenuIcon />
             </IconButton>
@@ -145,8 +153,8 @@ export default function TopNavBar() {
 
               {isLoggedIn ? (
                 <MenuItem onClick={() => handleMenuClose(() => {
-                  localStorage.removeItem('jwt'); // 로그아웃 시 토큰 삭제
-                  navigate('/logout'); // 로그아웃 페이지나 처리 경로로 이동
+                  localStorage.removeItem('jwt');
+                  navigate('/logout');
                 })}>
                   <Typography
                     sx={{ color: '#d32f2f' }}

@@ -10,7 +10,7 @@ export default function OAuth2Redirect() {
 
     if (token) {
       localStorage.setItem('jwt', token);
-      navigate('/');
+      window.location.href = '/';
     } else {
       alert('로그인 실패\n 다시 시도해 주세요');
       navigate('/signin');

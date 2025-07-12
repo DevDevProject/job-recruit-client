@@ -32,19 +32,16 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-// const BACKEND_URL = 'https://api.alldevhub.com';
-const BACKEND_URL = 'http://localhost:8080';
-
 export default function SignInCard() {
 
   const loginSocialId = (provider) => {
-    window.location.href = `${BACKEND_URL}/oauth2/authorization/${provider}`;
+    window.location.href = `${process.env.LOGIN_URL}/oauth2/authorization/${provider}`;
   }
 
   return (
     <Card variant="outlined">
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <SitemarkIcon />
+        {/* <SitemarkIcon /> */}
       </Box>
       <Typography
         component="h1"

@@ -36,7 +36,7 @@ export default function ProfilePopUp({ open, anchorEl, handleClose }) {
           onClick={() => {
             localStorage.removeItem('jwt');
             handleClose();
-            navigate('/');
+            window.location.reload();
           }}
         >
           로그아웃

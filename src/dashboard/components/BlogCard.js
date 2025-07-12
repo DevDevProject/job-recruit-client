@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Grid from '@mui/material/Grid';
 import dayjs from 'dayjs';
+import axios from 'axios';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -62,13 +63,15 @@ function Author({ author, date }: { author: { name: string; avatar: string }, da
       );
   }
 
-export default function BlogCard({ img, category, url, title, description, author, date, focusedCardIndex, handleFocus, handleBlur }) {
+export default function BlogCard({ id, img, category, url, title, description, author, date, focusedCardIndex, handleFocus, handleBlur }) {
   const handleClick = () => {
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/blog/popular?id=${id}`, {})
+    .catch(err => console.log(err));
     window.open(url, '_blank');
   };
 
   return (
-    <Grid size={{ xs: 12, md: 6 }} onClick={handleClick}>
+    <Grid size={{ xs: 12, md: 6 }} onClick={() => handleClick()}>
         <SyledCard
           variant="outlined"
           onFocus={() => handleFocus(1)}

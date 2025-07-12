@@ -3,8 +3,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
+import Contact from '../internals/components/Contact';
 import ChartCategory from './ChartCategory';
 import ChartStack from './ChartStack';
+import PopularSection from './PopularSection';
+
+
 
 export default function MainGrid() {
   return (
@@ -32,8 +36,8 @@ export default function MainGrid() {
         <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
           <ChartStack />
         </Grid>
+        <PopularSection />
       </Grid>
-      <Copyright sx={{mt: 10}} />
       
     </Box>
   );

@@ -65,7 +65,6 @@ function DetailContent({ company, setCompany }) {
   const [options, setOptions] = React.useState('')
 
   React.useEffect(() => {
-
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/recruit/${params.id}`)
       .then((res) => {
         setCompany(res.data.company)
