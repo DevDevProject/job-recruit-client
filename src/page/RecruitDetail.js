@@ -5,12 +5,13 @@ import Stack from '@mui/material/Stack';
 import AppNavbar from '../dashboard/components/AppNavbar';
 import Header from '../dashboard/components/Header';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 import CompanyHeader from '../dashboard/components/RecruitDetailHeader';
 import MetaTag from '../shared/components/MetaTag';
 import { stacks } from '../commons/data/RecruitOptions';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 export default function RecruitDetail(props) {
   const [company, setCompany] = React.useState({})
@@ -60,6 +61,57 @@ export default function RecruitDetail(props) {
 function DetailContent({ company, setCompany }) {
   const params = useParams();
 
+  const navigate = useNavigate()
+
+  const [isSubscription, setIsSubscription] = React.useState(false)
+
+  const subscribeRecruit = () => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/user/recruit/subscription/${params.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`
+          }
+        }
+      )
+        .then(res => setIsSubscription(true))
+        .catch(err => console.log(err))
+    } else {
+      const shouldGoToLogin = window.confirm("로그인이 필요합니다.\n로그인 페이지로 이동할까요?");
+
+      if (shouldGoToLogin) {
+        navigate('/signin');
+      }
+    }
+  };
+
+  const unsubscribeRecruit = () => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/api/user/recruit/subscription/${params.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`
+          }
+        }
+      )
+        .then(res => setIsSubscription(false))
+        .catch(err => console.log(err))
+    } else {
+      const shouldGoToLogin = window.confirm("로그인이 필요합니다.\n로그인 페이지로 이동할까요?");
+
+      if (shouldGoToLogin) {
+        navigate('/signin');
+      }
+    }
+  };
 
   const [detail, setDetail] = React.useState('')
   const [options, setOptions] = React.useState('')
@@ -72,6 +124,18 @@ function DetailContent({ company, setCompany }) {
         setOptions(res.data.options)
       })
       .catch(err => console.error('카테고리 로딩 실패', err));
+
+    const token = localStorage.getItem("jwt");
+    if(token) {
+      axios.get(`${process.env.REACT_APP_SERVER_URL}/api/user/recruit/subscription/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => setIsSubscription(res.data))
+      .catch(err => console.log(err));
+    }
+    
   }, []);
 
   return (
@@ -92,59 +156,81 @@ function DetailContent({ company, setCompany }) {
             <img src={detail.body_url} style={{ maxWidth: '100%', height: 'auto' }} />
           </div>
         ) : (
-      <>
-        {detail.responsibility && (
-          <div className='recruit-body'>
-            <Typography variant='h2'>주요 업무</Typography>
-            {detail.responsibility.split('\n').map(line => line.trimStart()).join('\n')}
-          </div>
-        )}
+          <>
+            {detail.responsibility && (
+              <div className='recruit-body'>
+                <Typography variant='h2'>주요 업무</Typography>
+                {detail.responsibility.split('\n').map(line => line.trimStart()).join('\n')}
+              </div>
+            )}
 
-        {detail.requirement && (
-          <div className='recruit-body'>
-            <Typography variant='h2'>자격 요건</Typography>
-            {detail.requirement.split('\n').map(line => line.trimStart()).join('\n')}
-          </div>
-        )}
+            {detail.requirement && (
+              <div className='recruit-body'>
+                <Typography variant='h2'>자격 요건</Typography>
+                {detail.requirement.split('\n').map(line => line.trimStart()).join('\n')}
+              </div>
+            )}
 
-        {detail.preference && (
-          <div className='recruit-body'>
-            <Typography variant='h2'>우대 사항</Typography>
-            {detail.preference.split('\n').map(line => line.trimStart()).join('\n')}
-          </div>
-        )}
+            {detail.preference && (
+              <div className='recruit-body'>
+                <Typography variant='h2'>우대 사항</Typography>
+                {detail.preference.split('\n').map(line => line.trimStart()).join('\n')}
+              </div>
+            )}
 
-        {detail.benefit && (
-          <div className='recruit-body'>
-            <Typography variant='h2'>복지 및 혜택</Typography>
-            {detail.benefit.split('\n').map(line => line.trimStart()).join('\n')}
-          </div>
-        )}
+            {detail.benefit && (
+              <div className='recruit-body'>
+                <Typography variant='h2'>복지 및 혜택</Typography>
+                {detail.benefit.split('\n').map(line => line.trimStart()).join('\n')}
+              </div>
+            )}
 
-        {detail.process && (
-          <div className='recruit-body'>
-            <Typography variant='h2'>채용 절차</Typography>
-            {detail.process.split('\n').map(line => line.trimStart()).join('\n')}
-          </div>
-        )}
-      </>
-      )
+            {detail.process && (
+              <div className='recruit-body'>
+                <Typography variant='h2'>채용 절차</Typography>
+                {detail.process.split('\n').map(line => line.trimStart()).join('\n')}
+              </div>
+            )}
+          </>
+        )
       }
 
 
 
       <div className='right-bottom-fix'>
-        <Button sx={{
-          backgroundColor: 'primary.main',
-          color: 'white',
-          width: 48,
-          height: 48,
-          minWidth: 0,
-          padding: 0,
-          marginRight: 1
-        }}>
-          <BookmarkBorderIcon />
-        </Button>
+        {
+          isSubscription ? (
+            <Button sx={{
+              backgroundColor: 'primary.main',
+              color: 'white',
+              width: 48,
+              height: 48,
+              minWidth: 0,
+              padding: 0,
+              marginRight: 1
+            }}
+              onClick={() => unsubscribeRecruit()}
+            >
+              <BookmarkIcon />
+            </Button>
+          ) : (
+            <Button sx={{
+              backgroundColor: 'primary.main',
+              color: 'white',
+              width: 48,
+              height: 48,
+              minWidth: 0,
+              padding: 0,
+              marginRight: 1
+            }}
+              onClick={() => subscribeRecruit()}
+            >
+              <BookmarkBorderIcon />
+            </Button>
+          )
+        }
+
+
         <Button sx={{
           backgroundColor: 'primary.main',
           color: 'white',

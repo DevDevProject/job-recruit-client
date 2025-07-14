@@ -35,7 +35,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 export default function SignInCard() {
 
   const loginSocialId = (provider) => {
-    window.location.href = `${process.env.LOGIN_URL}/oauth2/authorization/${provider}`;
+    window.location.href = `${process.env.REACT_APP_LOGIN_URL}/oauth2/authorization/${provider}`;
   }
 
   return (

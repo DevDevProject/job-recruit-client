@@ -162,7 +162,7 @@ export default function TopNavBar() {
                   </Typography>
                 </MenuItem>
               ) : (
-                <MenuItem onClick={() => handleMenuClose(() => navigate('/login'))}>
+                <MenuItem onClick={() => handleMenuClose(() => navigate('/signin'))}>
                   <Typography textAlign="center">로그인 / 회원가입</Typography>
                 </MenuItem>
               )}
