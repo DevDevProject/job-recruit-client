@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardMedia, Typography, Chip, Stack, Grid, Box, Avatar } from '@mui/material';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { data } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 
 // --- RecruitPost 컴포넌트 시작 ---
 
@@ -21,8 +21,15 @@ export default function RecruitPost({
   row,
   maxTechStacks = 5,
 }) {
-  const displayedTechStacks = row.stacks.slice(0, maxTechStacks);
+  const [showAllStacks, setShowAllStacks] = useState(false);
+
+  const displayedTechStacks = showAllStacks ? row.stacks : row.stacks.slice(0, maxTechStacks);
   const remainingTechStacksCount = row.stacks.length - maxTechStacks;
+
+  const handleShowAllStacks = (e) => {
+    e.stopPropagation();
+    setShowAllStacks(true);
+  };
 
   return (
     <CardWrapper
@@ -70,10 +77,13 @@ export default function RecruitPost({
           <Grid item xs={12}>
             <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
               <Typography variant="body2" color="text.secondary">
-                <Box component="span" sx={{ fontWeight: 'bold' }}>고용:</Box> {row.type}
+                <Box component="span" sx={{ fontWeight: 'bold' }}>마감일:</Box> {row.deadline}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 <Box component="span" sx={{ fontWeight: 'bold' }}>경력:</Box> {row.work_experience}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                <Box component="span" sx={{ fontWeight: 'bold' }}>고용:</Box> {row.type}
               </Typography>
             </Stack>
           </Grid>
@@ -86,12 +96,14 @@ export default function RecruitPost({
               {displayedTechStacks.map((tech, index) => (
                 <Chip key={index} label={tech} size="small" variant="outlined" />
               ))}
-              {remainingTechStacksCount > 0 && (
+              {!showAllStacks && remainingTechStacksCount > 0 && (
                 <Chip
                   label={`+${remainingTechStacksCount}`}
                   size="small"
                   variant="filled"
                   color="primary"
+                  onClick={handleShowAllStacks}
+                  sx={{ cursor: 'pointer' }}
                 />
               )}
             </Stack>
@@ -99,6 +111,5 @@ export default function RecruitPost({
         </Grid>
       </CardContent>
     </CardWrapper>
-
   );
 }

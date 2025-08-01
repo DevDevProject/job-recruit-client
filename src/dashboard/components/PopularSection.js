@@ -32,19 +32,19 @@ const PopularSection = () => {
       .then(res => {
         setRecruits(res.data)
       }).catch(err => console.log('recruit ' + err))
-    
+
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/blog/popular`)
-    .then(res => {
-      setBlogs(res.data)
-    }).catch(err => console.log('blog ' + err))
+      .then(res => {
+        setBlogs(res.data)
+      }).catch(err => console.log('blog ' + err))
 
     axios.get(`${process.env.REACT_APP_SERVER_URL}/api/company/popular`)
-    .then(res => {
-      setCompanies(res.data)
-    }).catch(err => console.log('company ' + err))
+      .then(res => {
+        setCompanies(res.data)
+      }).catch(err => console.log('company ' + err))
   }, [])
 
-  
+
 
   return (
     <Box
@@ -66,7 +66,14 @@ const PopularCard = ({ title, data, category }) => {
   const navigate = useNavigate()
 
   return (
-    <Card sx={{ flex: 1, minWidth: 300, maxWidth: 450 }}>
+    <Card sx={{
+      flex: 1,
+      flexShrink: 0,
+      minHeight: 420,
+      minWidth: 300,
+      maxWidth: 450,
+
+    }}>
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6">{title}</Typography>
@@ -81,39 +88,39 @@ const PopularCard = ({ title, data, category }) => {
                 sx={{ cursor: 'pointer' }}
                 onClick={() => navigate(`/${category}/${item.id}`)}
               >
-                <TableCell align="center" sx={{whiteSpace: 'nowrap',}}>{index + 1}</TableCell>
+                <TableCell align="center" sx={{ whiteSpace: 'nowrap', }}>{index + 1}</TableCell>
                 {(category === 'recruit' || category === 'blog') ? (
                   <TableCell>
-                  <Tooltip title={item.title}>
-                    <Box
-                      sx={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        maxWidth: "220px",
-                      }}
-                    >
-                      {item.title}
-                    </Box>
-                  </Tooltip>
-                </TableCell>
+                    <Tooltip title={item.title}>
+                      <Box
+                        sx={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          maxWidth: "220px",
+                        }}
+                      >
+                        {item.title}
+                      </Box>
+                    </Tooltip>
+                  </TableCell>
                 ) : (
                   <TableCell>
-                  <Tooltip title={item.name}>
-                    <Box
-                      sx={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        maxWidth: "220px",
-                      }}
-                    >
-                      {item.name}
-                    </Box>
-                  </Tooltip>
-                </TableCell>
+                    <Tooltip title={item.name}>
+                      <Box
+                        sx={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          maxWidth: "220px",
+                        }}
+                      >
+                        {item.name}
+                      </Box>
+                    </Tooltip>
+                  </TableCell>
                 )}
-                
+
                 {(category === 'recruit' || category === 'blog') && (
                   <Tooltip title={item.company_name}>
                     <TableCell
@@ -121,7 +128,7 @@ const PopularCard = ({ title, data, category }) => {
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                        maxWidth: 150,
+                        maxWidth: 180,
                       }}
                     >
                       {(item.company_name || '').replace(/\(.*?\)/g, '').trim()}

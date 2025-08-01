@@ -1,5 +1,5 @@
 export const categories = [
-    "Server/Backend", "Front", "Full-Stack", "Android", "Ios", "Game", "DBA", "Data", "AI", "DevOps", "Security",
+    "Backend", "Front", "Full-Stack", "Android", "Ios", "Game", "DBA", "Data", "AI", "DevOps", "Security",
     "QA", "PM", "Embedded", "SI", "SM", "Solution", "Publisher", "VR/AR", "Block-Chain"
 ]
 

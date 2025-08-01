@@ -75,6 +75,7 @@ export default function RecruitMain() {
   useEffect(() => {
     const params: any = {
     page: page.toString(),
+    sort,
       ...(type.length > 0 && { type: type.join(',') }),
       ...(category.length > 0 && { category: category.join(',') }),
       ...(experience.length > 0 && { experience: experience.join(',') }),
@@ -101,6 +102,7 @@ export default function RecruitMain() {
       }
     )
       .then((res) => {
+        console.log(res.data)
         setRows(res.data.recruits)
         setRowCount(res.data.total_count)
         setTotalCount(res.data.total_count)
@@ -109,7 +111,7 @@ export default function RecruitMain() {
       .catch((err) => {
         setLoading(false)
       })
-  }, [page, search])
+  }, [page, search, sort])
 
   const handlePageChange = (event, value) => {
     setPage(value);
